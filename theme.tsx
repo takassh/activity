@@ -20,6 +20,7 @@ export const theme = extendTheme({
     body: 'Noto Sans JP, Hiragino Kaku Gothic ProN, Proxima Nova, Verdana, 游ゴシック, YuGothic, Meiryo, sans-serif',
   },
   initialColorMode: 'dark',
+  useSystemColorMode: true,
   styles: {
     global: (props: any) => ({
       body: {

@@ -9,6 +9,7 @@ import {
   StackProps,
   Text,
   useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import {
   faArrowRight,
@@ -47,6 +48,7 @@ export function RecentActivity({
     setEvents([...events, ...newEvents]);
     setHasMore(newEvents.length === LIMIT);
   };
+  const bg = useColorModeValue('gray.50', 'gray.800')
 
   return (
     <Stack {...props}>
@@ -55,7 +57,7 @@ export function RecentActivity({
         justifyContent="center"
         position="sticky"
         top={0}
-        bg={colorMode === 'light' ? 'gray.50' : 'gray.800'}
+        bg={bg}
       >
         <Text my={2} fontSize={['lg']} fontWeight="bold">
           Recent Activity

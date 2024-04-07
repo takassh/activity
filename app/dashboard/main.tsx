@@ -9,6 +9,7 @@ import {
   Tabs,
   TabsProps,
   useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Page } from '../types/notion_page';
@@ -42,6 +43,8 @@ export function Main({
     }
   }
 
+  const bg = useColorModeValue('gray.50', 'gray.800')
+
   return (
     <Tabs
       onChange={(idx) => {
@@ -56,7 +59,7 @@ export function Main({
         position="sticky"
         top={0}
         zIndex={100}
-        bg={colorMode === 'light' ? 'gray.50' : 'gray.800'}
+        bg={bg}
       >
         <Show below="sm">
           <Center pt={2}>
