@@ -8,7 +8,6 @@ import {
   TabPanels,
   Tabs,
   TabsProps,
-  useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -30,7 +29,6 @@ export function Main({
   initialPages,
   ...props
 }: MainProps) {
-  const { colorMode } = useColorMode();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();

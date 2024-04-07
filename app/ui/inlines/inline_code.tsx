@@ -1,5 +1,5 @@
 'use client';
-import { Text, useColorMode } from '@chakra-ui/react';
+import { Text, useColorModeValue } from '@chakra-ui/react';
 import { InlineLink } from './inline_link';
 
 export function InlineCode({
@@ -9,12 +9,12 @@ export function InlineCode({
   children: React.ReactNode;
   href: string | null;
 }) {
-  const { colorMode } = useColorMode();
+  const bgColor = useColorModeValue('gray.100', 'gray.700');
   const child = (
     <Text
       rounded="sm"
       as="span"
-      backgroundColor={colorMode == 'light' ? 'gray.100' : 'gray.700'}
+      backgroundColor={bgColor}
       padding="1"
       fontSize="sm"
     >

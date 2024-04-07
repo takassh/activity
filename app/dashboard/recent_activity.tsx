@@ -8,7 +8,6 @@ import {
   Stack,
   StackProps,
   Text,
-  useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
 import {
@@ -38,8 +37,6 @@ export function RecentActivity({
   initialEvents,
   ...props
 }: RecentActivityProps) {
-  const { colorMode } = useColorMode();
-
   const [events, setEvents] = useState<Event[]>(initialEvents);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const loadMore = async () => {

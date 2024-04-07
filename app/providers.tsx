@@ -4,8 +4,9 @@ import { theme } from '@/theme';
 import {
   ChakraProvider,
   ColorModeScript,
-  localStorageManager,
+  cookieStorageManager,
 } from '@chakra-ui/react';
+import { Analytics } from '@vercel/analytics/react';
 import { setCookie } from 'cookies-next';
 
 export function Providers({
@@ -22,14 +23,15 @@ export function Providers({
     set: (value) => {
       setCookie('chakra-ui-color-mode', value);
     },
-  } as typeof localStorageManager;
+  } as typeof cookieStorageManager;
 
   return (
     <ChakraProvider colorModeManager={cookieManager} theme={theme}>
       <ColorModeScript
-        initialColorMode={theme.initialColorMode}
+        initialColorMode={theme.config.initialColorMode}
         type="cookie"
       />
+      <Analytics />
       {children}
     </ChakraProvider>
   );
