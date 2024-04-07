@@ -3,8 +3,9 @@ import { Box, Divider, Flex, Link, Show, Stack } from '@chakra-ui/react';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { getEvents, getPages } from '../api/data';
-import { ClientIcon } from '../ui/icon';
+import { ClientIcon } from '../ui/client_icon';
 import { Main } from './main';
 import { RecentActivity } from './recent_activity';
 
@@ -45,12 +46,30 @@ export default async function Page() {
           <Divider orientation="vertical" />
         </Flex>
       </Show>
-      <Main
-        categories={['', 'rust', 'nextjs', 'flutter', 'golang', 'aws', 'web3']}
-        tabNames={['ALL', 'Rust', 'NextJs', 'Flutter', 'Golang', 'AWS', 'Web3']}
-        initialPages={[all, rust, nextjs, flutter, golang, aws, web3]}
-        maxW="600px"
-      />
+      <Suspense>
+        <Main
+          categories={[
+            '',
+            'rust',
+            'nextjs',
+            'flutter',
+            'golang',
+            'aws',
+            'web3',
+          ]}
+          tabNames={[
+            'ALL',
+            'Rust',
+            'NextJs',
+            'Flutter',
+            'Golang',
+            'AWS',
+            'Web3',
+          ]}
+          initialPages={[all, rust, nextjs, flutter, golang, aws, web3]}
+          maxW="600px"
+        />
+      </Suspense>
       <Show above="sm">
         <Stack direction="row">
           <Divider orientation="vertical" />

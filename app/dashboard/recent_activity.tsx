@@ -24,7 +24,7 @@ import {
 import { useState } from 'react';
 import { getEvents } from '../api/data';
 import { Event } from '../types/event';
-import { ClientIcon } from '../ui/icon';
+import { ClientIcon } from '../ui/client_icon';
 import { ToolTipIcon } from '../ui/tool_tip_icon';
 
 const LIMIT: number = 30;

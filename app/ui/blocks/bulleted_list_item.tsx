@@ -1,7 +1,7 @@
 import { Block as BlockType, IsBlocks } from '@/app/types/block';
 import { RichText } from '@/app/types/rich_text';
 import { Box, ListItem, UnorderedList } from '@chakra-ui/react';
-import { Block } from './block';
+import { Blocks } from './block';
 import { Paragraph } from './paragraph';
 
 export function BulletedListItem({
@@ -38,7 +38,7 @@ export function BulletedListItem({
           />
         </ListItem>
         <Box marginLeft="xs">
-          <Block blocks={blocks} />
+          <Blocks blocks={blocks} />
         </Box>
       </UnorderedList>
     );

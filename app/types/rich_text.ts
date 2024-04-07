@@ -1,4 +1,4 @@
-import { DatePropertyValue } from './page';
+import { DatePropertyValue } from './notion_page';
 import { User } from './user';
 
 export type RichText =

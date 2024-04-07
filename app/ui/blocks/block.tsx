@@ -23,7 +23,7 @@ import { Paragraph } from './paragraph';
 import { Quote } from './quote';
 import { ToggleBlock } from './toggle';
 
-export function Block({ blocks }: { blocks: Block[] }) {
+export function Blocks({ blocks }: { blocks: Block[] }) {
   let numberListCounter = 0;
   const mapping = blocks.map((v, i) => {
     if (isBlockTypeParagraph(v)) {

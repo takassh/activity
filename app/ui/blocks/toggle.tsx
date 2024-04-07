@@ -8,7 +8,7 @@ import {
   AccordionPanel,
   Box,
 } from '@chakra-ui/react';
-import { Block } from './block';
+import { Blocks } from './block';
 import { Paragraph } from './paragraph';
 
 export function ToggleBlock({
@@ -35,7 +35,7 @@ export function ToggleBlock({
         <AccordionPanel>
           {IsBlocks(blocks) && (
             <Box>
-              <Block blocks={blocks} />
+              <Blocks blocks={blocks} />
             </Box>
           )}
         </AccordionPanel>

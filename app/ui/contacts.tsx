@@ -2,7 +2,7 @@ import { Wrap, WrapItem, WrapProps } from '@chakra-ui/react';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-import { ClientIcon } from './icon';
+import { ClientIcon } from './client_icon';
 
 export function Contacts({ ...props }: WrapProps) {
   return (

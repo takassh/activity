@@ -1,6 +1,6 @@
 import { Icon, Tooltip, forwardRef } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ClientIconProps } from './icon';
+import { ClientIconProps } from './client_icon';
 
 const CustomIcon = forwardRef<ClientIconProps, 'svg'>((props, ref) => (
   <Icon ref={ref} as={FontAwesomeIcon} {...props} />
