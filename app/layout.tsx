@@ -3,10 +3,7 @@ import './globals.css';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
-  title: {
-    template: '%s | Takassh Activity',
-    default: 'Takassh Activity',
-  },
+  title: 'Activity',
   description: 'Activities from takassh',
 };
 

@@ -1,16 +1,54 @@
 import { getBlock, getPage } from '@/app/api/data';
 import '@/app/extensions/date';
 import { isFileTypeExternal, isFileTypeHosted } from '@/app/types/file';
-import { IsPagePropertyTypeTitle } from '@/app/types/notion_page';
+import {
+  IsPagePropertyTypeRichText,
+  IsPagePropertyTypeTitle,
+} from '@/app/types/notion_page';
 import { RichText } from '@/app/types/rich_text';
 import { Blocks } from '@/app/ui/blocks/block';
 import { H1 } from '@/app/ui/blocks/h1';
 import { Flex, Img, Text } from '@chakra-ui/react';
-import { Metadata } from 'next';
+import { Metadata, ResolvingMetadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'Article',
-};
+export async function generateMetadata(
+  { params }: { params: { pageId: string } },
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const page = await getPage(params.pageId);
+
+  let title = '';
+  let summary = '';
+  let coverUrl = '';
+  if (IsPagePropertyTypeTitle(page.properties.name)) {
+    title = page.properties.name.title
+      .map((text) => text.plain_text ?? '')
+      .join('');
+  }
+  if (IsPagePropertyTypeRichText(page.properties.summary)) {
+    summary = page.properties.summary.rich_text
+      .map((text) => text.plain_text ?? '')
+      .join('');
+  }
+  if (isFileTypeExternal(page.cover)) {
+    coverUrl = page.cover.external.url;
+  }
+  if (isFileTypeHosted(page.cover)) {
+    coverUrl = page.cover.file.url;
+  }
+
+  return {
+    title: title,
+    description: summary,
+    openGraph: {
+      images: [
+        {
+          url: coverUrl,
+        },
+      ],
+    },
+  };
+}
 
 export default async function Page({
   params: { pageId },
