@@ -43,7 +43,7 @@ export function Main({
     }
   }
 
-  const bg = useColorModeValue('gray.50', 'gray.800')
+  const bg = useColorModeValue('gray.50', 'gray.800');
 
   return (
     <Tabs
@@ -55,12 +55,7 @@ export function Main({
       {...props}
       width="100%"
     >
-      <Box
-        position="sticky"
-        top={0}
-        zIndex={100}
-        bg={bg}
-      >
+      <Box position="sticky" top={0} zIndex={100} bg={bg}>
         <Show below="sm">
           <Center pt={2}>
             <Contacts position="sticky" top={4} />

@@ -48,7 +48,7 @@ export function RecentActivity({
     setEvents([...events, ...newEvents]);
     setHasMore(newEvents.length === LIMIT);
   };
-  const bg = useColorModeValue('gray.50', 'gray.800')
+  const bg = useColorModeValue('gray.50', 'gray.800');
 
   return (
     <Stack {...props}>

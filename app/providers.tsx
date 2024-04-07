@@ -25,13 +25,10 @@ export function Providers({
   } as typeof localStorageManager;
 
   return (
-    <ChakraProvider
-      colorModeManager={cookieManager}
-      theme={theme}
-    >
+    <ChakraProvider colorModeManager={cookieManager} theme={theme}>
       <ColorModeScript
         initialColorMode={theme.initialColorMode}
-        type='cookie'
+        type="cookie"
       />
       {children}
     </ChakraProvider>
