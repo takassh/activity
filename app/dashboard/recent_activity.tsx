@@ -1,0 +1,147 @@
+'use client';
+import {
+  Button,
+  Flex,
+  HStack,
+  Image,
+  Link,
+  Stack,
+  StackProps,
+  Text,
+  useColorMode,
+} from '@chakra-ui/react';
+import {
+  faArrowRight,
+  faArrowUp,
+  faCheck,
+  faCodePullRequest,
+  faEye,
+  faMinus,
+  faPencil,
+  faPlus,
+  faQuestion,
+} from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { getEvents } from '../api/data';
+import { Event } from '../types/event';
+import { ClientIcon } from '../ui/icon';
+import { ToolTipIcon } from '../ui/tool_tip_icon';
+
+const LIMIT: number = 30;
+
+export interface RecentActivityProps extends StackProps {
+  initialEvents: Event[];
+}
+
+export function RecentActivity({
+  initialEvents,
+  ...props
+}: RecentActivityProps) {
+  const { colorMode } = useColorMode();
+
+  const [events, setEvents] = useState<Event[]>(initialEvents);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const loadMore = async () => {
+    const page = Math.floor(events.length / LIMIT);
+    const newEvents = await getEvents(page, LIMIT);
+    setEvents([...events, ...newEvents]);
+    setHasMore(newEvents.length === LIMIT);
+  };
+
+  return (
+    <Stack {...props}>
+      <Flex
+        zIndex={100}
+        justifyContent="center"
+        position="sticky"
+        top={0}
+        bg={colorMode === 'light' ? 'gray.50' : 'gray.800'}
+      >
+        <Text my={2} fontSize={['lg']} fontWeight="bold">
+          Recent Activity
+        </Text>
+      </Flex>
+      <Stack>
+        {events.map((event) => {
+          const date = new Date(event.created_at).formattedDateTime();
+          let icon = faQuestion;
+          let tooltip = "I'm not sure what this is...";
+          if (event.type === 'PushEvent') {
+            icon = faArrowUp;
+            tooltip = 'Pushed some code';
+          }
+          if (event.type === 'WatchEvent') {
+            icon = faEye;
+            tooltip = 'Watching this repo';
+          }
+          if (event.type === 'CreateEvent') {
+            icon = faPlus;
+            tooltip = 'Created a new repo';
+          }
+          if (event.type === 'PullRequestEvent') {
+            icon = faCodePullRequest;
+            tooltip = 'Created a pull request';
+          }
+          if (event.type === 'PullRequestReviewEvent') {
+            icon = faCheck;
+            tooltip = 'Reviewed a pull request';
+          }
+          if (event.type === 'IssuesEvent') {
+            icon = faPencil;
+            tooltip = 'Created an issue';
+          }
+          if (event.type === 'DeleteEvent') {
+            icon = faMinus;
+            tooltip = 'Deleted a repo';
+          }
+
+          return (
+            <Link
+              key={event.id}
+              href={`https://github.com/${event.repo.name}`}
+              my={[1, 2]}
+            >
+              <HStack>
+                <Image
+                  mx={2}
+                  borderRadius="full"
+                  boxSize="25px"
+                  src={event.actor.avatar_url}
+                  alt={'avatar'}
+                />
+                <Flex direction="column">
+                  <HStack>
+                    <Text fontSize="sm">{event.actor.display_login}</Text>
+                    <ToolTipIcon icon={icon} tooltip={tooltip} fontSize="sm" />
+                  </HStack>
+                  <Text fontSize="sm" noOfLines={1} color="gray.500">
+                    {date}
+                  </Text>
+                </Flex>
+                <ClientIcon
+                  mx={2}
+                  fontSize={['md', 'lg']}
+                  icon={faArrowRight}
+                />
+                {event.org && (
+                  <Image
+                    borderRadius="full"
+                    boxSize="25px"
+                    src={event.org.avatar_url}
+                    alt={'avatar'}
+                  />
+                )}
+                <Text fontSize="sm">{event.repo.name}</Text>
+              </HStack>
+            </Link>
+          );
+        })}
+        {hasMore && (
+          <Button my={4} onClick={loadMore}>
+            Load more
+          </Button>
+        )}
+      </Stack>
+    </Stack>
+  );
+}
