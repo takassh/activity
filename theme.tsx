@@ -19,7 +19,7 @@ export const theme = extendTheme({
       'Helvetica Neue, Helvetica, Hiragino Sans, Hiragino Kaku Gothic ProN, Arial, Yu Gothic, Meiryo, sans-serif',
     body: 'Noto Sans JP, Hiragino Kaku Gothic ProN, Proxima Nova, Verdana, 游ゴシック, YuGothic, Meiryo, sans-serif',
   },
-  useSystemColorMode: true,
+  initialColorMode: 'dark',
   styles: {
     global: (props: any) => ({
       body: {

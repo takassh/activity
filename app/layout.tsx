@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import './globals.css';
 import { Providers } from './providers';
 
@@ -12,10 +13,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const colorMode = cookieStore.get('chakra-ui-color-mode');
+
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers colorMode={colorMode?.value}>{children}</Providers>
       </body>
     </html>
   );
