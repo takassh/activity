@@ -8,7 +8,7 @@ import {
   IsPagePropertyTypeRichText,
   IsPagePropertyTypeTitle,
   Page,
-} from '../types/page';
+} from '../types/notion_page';
 import { RichText } from '../types/rich_text';
 import ArticleItem from '../ui/article_item';
 

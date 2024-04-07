@@ -1,7 +1,7 @@
 import { getBlock, getPage } from '@/app/api/data';
 import '@/app/extensions/date';
 import { isFileTypeExternal, isFileTypeHosted } from '@/app/types/file';
-import { IsPagePropertyTypeTitle } from '@/app/types/page';
+import { IsPagePropertyTypeTitle } from '@/app/types/notion_page';
 import { RichText } from '@/app/types/rich_text';
 import { Block } from '@/app/ui/blocks/block';
 import { H1 } from '@/app/ui/blocks/h1';

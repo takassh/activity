@@ -2,7 +2,7 @@
 
 import { Block } from '../types/block';
 import { Event } from '../types/event';
-import { Page } from '../types/page';
+import { Page } from '../types/notion_page';
 import {
   GetBlockResponse,
   GetEventsResponse,

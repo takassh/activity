@@ -11,7 +11,7 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Page } from '../types/page';
+import { Page } from '../types/notion_page';
 import { Contacts } from '../ui/contacts';
 import { ArticleTabPanel } from './article_tab_panel';
 
