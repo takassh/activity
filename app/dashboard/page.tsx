@@ -2,10 +2,15 @@ import '@/app/extensions/date';
 import { Box, Divider, Flex, Link, Show, Stack } from '@chakra-ui/react';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faX } from '@fortawesome/free-solid-svg-icons';
+import { Metadata } from 'next';
 import { getEvents, getPages } from '../api/data';
 import { ClientIcon } from '../ui/icon';
 import { Main } from './main';
 import { RecentActivity } from './recent_activity';
+
+export const metadata: Metadata = {
+  title: 'Home',
+};
 
 export default async function Page() {
   const [all, rust, nextjs, flutter, golang, aws, web3, events] =

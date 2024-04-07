@@ -3,8 +3,11 @@ import './globals.css';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
-  title: 'Takassh blog',
-  description: 'Tech blog by Takassh',
+  title: {
+    template: '%s | Takassh Activity',
+    default: 'Takassh Activity',
+  },
+  description: 'Activities from takassh',
 };
 
 export default function RootLayout({

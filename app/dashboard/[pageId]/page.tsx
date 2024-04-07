@@ -6,6 +6,11 @@ import { RichText } from '@/app/types/rich_text';
 import { Block } from '@/app/ui/blocks/block';
 import { H1 } from '@/app/ui/blocks/h1';
 import { Flex, Img, Text } from '@chakra-ui/react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Article',
+};
 
 export default async function Page({
   params: { pageId },
