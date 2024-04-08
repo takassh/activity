@@ -5,10 +5,11 @@ import { faX } from '@fortawesome/free-solid-svg-icons';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getEvents, getPages } from '../api/data';
-import { checkRestricted } from '../api/restricted';
 import { ClientIcon } from '../ui/client_icon';
 import { Main } from './main';
 import { RecentActivity } from './recent_activity';
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -26,7 +27,6 @@ export default async function Page() {
       getPages(0, 20, 'web3'),
       getEvents(0, 50),
     ]);
-  console.log(await checkRestricted());
 
   return (
     <Flex justifyContent="center" width="full">

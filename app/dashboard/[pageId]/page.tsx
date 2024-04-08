@@ -11,6 +11,8 @@ import { H1 } from '@/app/ui/blocks/h1';
 import { Flex, Img, Text } from '@chakra-ui/react';
 import { Metadata, ResolvingMetadata } from 'next';
 
+export const revalidate = 3600
+
 export async function generateMetadata(
   { params }: { params: { pageId: string } },
   parent: ResolvingMetadata,
