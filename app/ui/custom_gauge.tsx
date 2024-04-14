@@ -1,6 +1,7 @@
 'use client';
 
 import { GaugeConfig } from '@ant-design/plots';
+import { Box } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 
 const Gauge = dynamic(
@@ -40,7 +41,7 @@ export function CustomGauge({
         style: {
           text: title,
           x: '50%',
-          y: '35%',
+          y: '37%',
           textAlign: 'center',
           fontSize: titleFontSize,
           fontStyle: 'bold',
@@ -50,5 +51,9 @@ export function CustomGauge({
     ],
   };
 
-  return <Gauge {...cpuUsageConfig} />;
+  return (
+    <Box pointerEvents="none">
+      <Gauge {...cpuUsageConfig} />
+    </Box>
+  );
 }

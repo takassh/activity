@@ -6,8 +6,8 @@ import {
   Box,
   Center,
   CircularProgress,
+  Flex,
   Text,
-  VStack,
   Wrap,
   WrapItem,
   useBreakpointValue,
@@ -33,10 +33,12 @@ export function Charts() {
   const top = JSON.parse(lastMessage?.data as unknown as string) as Top;
 
   return (
-    <VStack>
-      <Text fontSize={['md', 'lg']} color="gray.500" m={[4, 8]}>
-        {new Date(top.processes.datetime).toLocaleString()}
-      </Text>
+    <Flex direction="column">
+      <Center position="sticky" top={0} bg="bg" zIndex={100}>
+        <Text fontSize={['md', 'lg']} color="gray.500" m={[4, 8]}>
+          {new Date(top.processes.datetime).toLocaleString()}
+        </Text>
+      </Center>
       <Wrap justify="center">
         <WrapItem>
           <Box maxW={['300', '400']}>
@@ -105,6 +107,6 @@ export function Charts() {
           </Box>
         </WrapItem>
       </Wrap>
-    </VStack>
+    </Flex>
   );
 }
