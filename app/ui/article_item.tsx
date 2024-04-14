@@ -45,8 +45,8 @@ export default function ArticleItem({
           <Spacer />
           <Image
             src={imageUrl}
-            height={[100, 150]}
-            width={[100, 150]}
+            height={[100]}
+            width={[100]}
             rounded="lg"
             objectFit="cover"
             alt="article image"
@@ -58,7 +58,7 @@ export default function ArticleItem({
               {tag}
             </Tag>
           ))}
-          <Text fontSize={['xs', 'sm']} noOfLines={1} color="gray.500">
+          <Text fontSize={['xs']} noOfLines={1} color="gray.500">
             {new Date(createdAt).formattedDateTime()}
           </Text>
         </Stack>

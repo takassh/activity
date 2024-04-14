@@ -1,18 +1,14 @@
 'use client';
 import {
   Box,
-  Center,
-  Show,
   Tab,
   TabList,
   TabPanels,
   Tabs,
   TabsProps,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Page } from '../types/notion_page';
-import { Contacts } from '../ui/contacts';
 import { ArticleTabPanel } from './article_tab_panel';
 
 const tabs = ['all', 'rust', 'nextjs', 'flutter', 'golang', 'aws', 'web3'];
@@ -41,8 +37,6 @@ export function Main({
     }
   }
 
-  const bg = useColorModeValue('gray.50', 'gray.800');
-
   return (
     <Tabs
       onChange={(idx) => {
@@ -52,17 +46,14 @@ export function Main({
       defaultIndex={initialTab}
       {...props}
       width="100%"
+      variant="unstyled"
     >
-      <Box position="sticky" top={0} zIndex={100} bg={bg}>
-        <Show below="sm">
-          <Center pt={2}>
-            <Contacts position="sticky" top={4} />
-          </Center>
-        </Show>
+      <Box position="sticky" top={0} zIndex={100} bg="bg">
         <TabList overflowX="scroll" overflowY="hidden">
           {tabNames.map((tabName, i) => {
             return (
               <Tab
+                fontSize={['lg']}
                 key={`tab-${tabName}`}
                 _hover={{ fontWeight: 'bold' }}
                 _selected={{ fontWeight: 'bold' }}

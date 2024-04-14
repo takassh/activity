@@ -11,6 +11,8 @@
     "check-format": "prettier -c ."
   },
   "dependencies": {
+    "@ant-design/charts": "^2.0.3",
+    "@ant-design/plots": "^2.1.15",
     "@chakra-ui/next-js": "^2.2.0",
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.4",
@@ -26,7 +28,8 @@
     "next": "14.1.4",
     "next-auth": "^5.0.0-beta.16",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-use-websocket": "^4.8.1"
   },
   "devDependencies": {
     "@types/node": "^20",

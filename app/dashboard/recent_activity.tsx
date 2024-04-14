@@ -113,7 +113,7 @@ export function RecentActivity({
                     <Text fontSize="sm">{event.actor.display_login}</Text>
                     <ToolTipIcon icon={icon} tooltip={tooltip} fontSize="sm" />
                   </HStack>
-                  <Text fontSize="sm" noOfLines={1} color="gray.500">
+                  <Text fontSize="xs" color="gray.500">
                     {date}
                   </Text>
                 </Flex>
