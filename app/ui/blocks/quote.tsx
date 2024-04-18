@@ -1,12 +1,11 @@
 import { RichText } from '@/app/types/rich_text';
-import { Divider, Stack } from '@chakra-ui/react';
+import { Box, Stack, StackDivider } from '@chakra-ui/react';
 import { Paragraph } from './paragraph';
 
 export function Quote({ id, text }: { id: string; text: RichText[] }) {
   return (
-    <Stack direction="row">
-      {/* TODO: show vertical divider */}
-      <Divider orientation="vertical" borderLeftWidth={4} />
+    <Stack divider={<StackDivider borderWidth={2} />} direction="row">
+      <Box />
       <Paragraph
         id={id}
         text={text}
