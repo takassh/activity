@@ -99,7 +99,7 @@ export function Charts() {
           <Box maxW={['300', '400']}>
             <CustomGauge
               target={top.phys_mem.used}
-              total={16 * 1000 * 1000}
+              total={16 * 1000 * 1000 * 1000}
               title={'PHYSICAL\nMEMORY'}
               titleFontSize={titleFontSize}
               color={color}
