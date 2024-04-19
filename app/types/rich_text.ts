@@ -7,21 +7,21 @@ export type RichText =
       equation: Equation;
       annotations: Annotations;
       plain_text: string;
-      href: string | null;
+      href?: string;
     }
   | {
       type: 'mention';
       mention: Mention;
       annotations: Annotations;
       plain_text: string;
-      href: string | null;
+      href?: string;
     }
   | {
       type: 'text';
       text: Text;
-      annotations: Annotations | null;
-      plain_text: string | null;
-      href: string | null;
+      annotations?: Annotations;
+      plain_text?: string;
+      href?: string;
     };
 
 export type Equation = {
@@ -30,7 +30,7 @@ export type Equation = {
 
 export type Text = {
   content: string;
-  link: Link | null;
+  link?: Link;
 };
 
 export enum TextColor {

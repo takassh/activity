@@ -7,7 +7,7 @@ import { Footer } from '../ui/footer';
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Box>
-      <Flex py={8} px={8}>
+      <Flex py={8} px={[4, 8]}>
         <Link href="/dashboard">
           <Image
             borderRadius="full"

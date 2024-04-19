@@ -1,19 +1,10 @@
 import { Text } from '@chakra-ui/react';
 import { InlineLink } from './inline_link';
+import { InlineTextProps } from './inline_text';
 
-export function InlineItalic({
-  children,
-  href,
-  fontSize,
-  fontWeight,
-}: {
-  children: React.ReactNode;
-  href: string | null;
-  fontSize: string[] | string;
-  fontWeight: string[] | string;
-}) {
+export function InlineItalic({ children, href, ...props }: InlineTextProps) {
   const child = (
-    <Text as="i" fontSize={fontSize} fontWeight={fontWeight}>
+    <Text as="i" {...props}>
       {children}
     </Text>
   );

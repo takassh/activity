@@ -1,10 +1,10 @@
-import { Link } from '@chakra-ui/react';
+import { Link, LinkProps } from '@chakra-ui/react';
 
 export function InlineLink({
   href,
   children,
 }: {
-  href: string;
+  href: LinkProps['href'];
   children: React.ReactNode;
 }) {
   return (

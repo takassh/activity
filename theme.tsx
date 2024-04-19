@@ -1,5 +1,16 @@
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
+import { Inter, Open_Sans, Roboto_Mono } from 'next/font/google';
+
+const open_sans = Open_Sans({
+  subsets: ['latin'],
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+});
+
+export const roboto_mono = Roboto_Mono({ subsets: ['latin'] });
 
 export const theme = extendTheme({
   components: {
@@ -13,11 +24,16 @@ export const theme = extendTheme({
         zIndex: 0,
       },
     },
+    Code: {
+      baseStyle: {
+        fontFamily: roboto_mono.style.fontFamily,
+        fontWeight: 500,
+      },
+    },
   },
   fonts: {
-    heading:
-      'Helvetica Neue, Helvetica, Hiragino Sans, Hiragino Kaku Gothic ProN, Arial, Yu Gothic, Meiryo, sans-serif',
-    body: 'Noto Sans JP, Hiragino Kaku Gothic ProN, Proxima Nova, Verdana, 游ゴシック, YuGothic, Meiryo, sans-serif',
+    heading: `-apple-system, BlinkMacSystemFont, ${inter.style.fontFamily}, ${open_sans.style.fontFamily}`,
+    body: `-apple-system, BlinkMacSystemFont, ${inter.style.fontFamily}, ${open_sans.style.fontFamily}`,
   },
   config: {
     initialColorMode: 'system',

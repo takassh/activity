@@ -26,8 +26,8 @@ export default function ArticleItem({
 }: ArticleItemProps) {
   return (
     <Link href={href}>
-      <Stack>
-        <Stack direction="row">
+      <Stack spacing={[2, 4]}>
+        <Stack direction="row" alignItems="start">
           <Stack>
             <Paragraph
               id={id}
@@ -40,19 +40,20 @@ export default function ArticleItem({
               text={summary}
               fontSize={['sm', 'md']}
               fontWeight="normal"
+              noOfLines={3}
             />
           </Stack>
           <Spacer />
           <Image
             src={imageUrl}
-            height={[100]}
-            width={[100]}
+            height={[100, 120]}
+            width={[100, 120]}
             rounded="lg"
             objectFit="cover"
             alt="article image"
           />
         </Stack>
-        <Stack direction="row">
+        <Stack direction="row" alignItems="end">
           {tags.map((tag) => (
             <Tag key={`tag-${tag}`} fontSize={['xs', 'sm']}>
               {tag}

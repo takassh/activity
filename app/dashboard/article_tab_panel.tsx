@@ -56,7 +56,7 @@ export function ArticleTabPanel({
           }
 
           return (
-            <Box key={`page-${page.id}`} py={4}>
+            <Box key={`page-${page.id}`} py={2}>
               <ArticleItem
                 href={`/dashboard/${page.id}`}
                 id={page.id}

@@ -49,13 +49,7 @@ export function RecentActivity({
 
   return (
     <Stack {...props}>
-      <Flex
-        zIndex={100}
-        justifyContent="center"
-        position="sticky"
-        top={0}
-        bg={bg}
-      >
+      <Flex zIndex={100} position="sticky" top={0} bg={bg}>
         <Text my={2} fontSize={['lg']} fontWeight="bold">
           Recent Activity
         </Text>

@@ -48,12 +48,12 @@ export default async function Page() {
             'Web3',
           ]}
           initialPages={[all, rust, nextjs, flutter, golang, aws, web3]}
-          maxW="600px"
+          maxW="700px"
         />
       </Suspense>
       <Show above="sm">
         <Stack direction="row">
-          <RecentActivity initialEvents={events} mx={16} maxW="350px" />
+          <RecentActivity initialEvents={events} mx={16} maxW="500px" />
         </Stack>
       </Show>
     </Flex>

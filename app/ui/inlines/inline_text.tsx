@@ -1,23 +1,18 @@
-import { Text } from '@chakra-ui/react';
+import { LinkProps, Text, TextProps } from '@chakra-ui/react';
 import { InlineLink } from './inline_link';
 
-export function InlineText({
-  children,
-  href,
-  fontSize,
-  fontWeight,
-}: {
+export interface InlineTextProps extends TextProps {
   children: React.ReactNode;
-  href: string | null;
-  fontSize: string[] | string;
-  fontWeight: string[] | string;
-}) {
+  href: LinkProps['href'];
+}
+
+export function InlineText({ children, href, ...props }: InlineTextProps) {
   const child = (
-    <Text as="span" fontSize={fontSize} fontWeight={fontWeight}>
+    <Text as="span" {...props}>
       {children}
     </Text>
   );
-  if (href == null) {
+  if (href == undefined) {
     return child;
   } else {
     return <InlineLink href={href}>{child}</InlineLink>;

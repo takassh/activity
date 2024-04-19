@@ -1,19 +1,14 @@
 import { Text } from '@chakra-ui/react';
 import { InlineLink } from './inline_link';
+import { InlineTextProps } from './inline_text';
 
 export function InlineStrikethrough({
   children,
   href,
-  fontSize,
-  fontWeight,
-}: {
-  children: React.ReactNode;
-  href: string | null;
-  fontSize: string[] | string;
-  fontWeight: string[] | string;
-}) {
+  ...props
+}: InlineTextProps) {
   const child = (
-    <Text as="s" fontSize={fontSize} fontWeight={fontWeight}>
+    <Text as="s" {...props}>
       {children}
     </Text>
   );

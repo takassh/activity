@@ -8,7 +8,7 @@ import {
 import { RichText } from '@/app/types/rich_text';
 import { Blocks } from '@/app/ui/blocks/block';
 import { H1 } from '@/app/ui/blocks/h1';
-import { Flex, Img, Text } from '@chakra-ui/react';
+import { Box, Flex, Img, Text } from '@chakra-ui/react';
 import { Metadata, ResolvingMetadata } from 'next';
 
 export const revalidate = 3600;
@@ -49,6 +49,10 @@ export async function generateMetadata(
         },
       ],
     },
+    twitter: {
+      card: 'summary',
+      creator: '@octozuki',
+    },
   };
 }
 
@@ -75,26 +79,31 @@ export default async function Page({
   }
 
   return (
-    <Flex py={[2, 8]} px={[2, 8]} direction="column" width="full">
-      <Img
-        shadow="2xl"
-        rounded="lg"
-        src={coverUrl}
-        objectFit="cover"
-        height="300"
-      />
-      <H1 key={`title`} text={title} id={'title'} />
-      <Text
-        mb={4}
-        color="gray.500"
-        fontWeight="semibold"
-        letterSpacing="wide"
-        fontSize="xs"
-        textTransform="uppercase"
-      >
-        {date}
-      </Text>
-      <Blocks blocks={blocks} />
+    <Flex px={[4, 8]} direction="column" alignItems="center">
+      <Box width={['full', '']} maxW={['', '1000']}>
+        <Img
+          shadow="2xl"
+          rounded="lg"
+          src={coverUrl}
+          objectFit="cover"
+          height={['200', '300']}
+          width="100%"
+        />
+        <Box py={4} />
+        <H1 key={`title`} text={title} id={'title'} />
+        <Text
+          mb={4}
+          color="gray.500"
+          fontWeight="semibold"
+          letterSpacing="wide"
+          fontSize="xs"
+          textTransform="uppercase"
+        >
+          {date}
+        </Text>
+        <Box py={4} />
+        <Blocks blocks={blocks} />
+      </Box>
     </Flex>
   );
 }

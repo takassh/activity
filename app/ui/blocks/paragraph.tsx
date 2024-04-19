@@ -1,5 +1,5 @@
 import { RichText } from '@/app/types/rich_text';
-import { Box } from '@chakra-ui/react';
+import { Box, TextProps } from '@chakra-ui/react';
 import { InlineCode } from '../inlines/inline_code';
 import { InlineItalic } from '../inlines/inline_italic';
 import { InlineStrikethrough } from '../inlines/inline_strikethrough';
@@ -7,14 +7,12 @@ import { InlineText } from '../inlines/inline_text';
 import { InlineUnderline } from '../inlines/inline_underline';
 import { EmptyBlock } from './empty';
 
-export type ParagraphProps = {
+interface ParagraphProps extends TextProps {
   id: string;
   text: RichText[];
-  fontSize: string[] | string;
-  fontWeight: string[] | string;
-};
+}
 
-export function Paragraph({ id, text, fontSize, fontWeight }: ParagraphProps) {
+export function Paragraph({ id, text, ...props }: ParagraphProps) {
   if (text.length != 0) {
     const paragraph = text
       .map((v, i) => {
@@ -22,9 +20,9 @@ export function Paragraph({ id, text, fontSize, fontWeight }: ParagraphProps) {
         if (v.annotations?.bold) {
           child = (
             <InlineText
+              {...props}
               key={`bold-${i}`}
               href={v.href}
-              fontSize={fontSize}
               fontWeight="bold"
             >
               {v.plain_text}
@@ -32,12 +30,7 @@ export function Paragraph({ id, text, fontSize, fontWeight }: ParagraphProps) {
           );
         } else {
           child = (
-            <InlineText
-              key={`normal-${i}`}
-              href={v.href}
-              fontSize={fontSize}
-              fontWeight={fontWeight}
-            >
+            <InlineText {...props} key={`normal-${i}`} href={v.href}>
               {v.plain_text}
             </InlineText>
           );
@@ -45,12 +38,7 @@ export function Paragraph({ id, text, fontSize, fontWeight }: ParagraphProps) {
 
         if (v.annotations?.italic) {
           child = (
-            <InlineItalic
-              key={`italic-${i}`}
-              href={v.href}
-              fontSize={fontSize}
-              fontWeight={fontWeight}
-            >
+            <InlineItalic {...props} key={`italic-${i}`} href={v.href}>
               {child}
             </InlineItalic>
           );
@@ -58,10 +46,9 @@ export function Paragraph({ id, text, fontSize, fontWeight }: ParagraphProps) {
         if (v.annotations?.strikethrough) {
           child = (
             <InlineStrikethrough
+              {...props}
               key={`strikethrough-${i}`}
               href={v.href}
-              fontSize={fontSize}
-              fontWeight={fontWeight}
             >
               {child}
             </InlineStrikethrough>
@@ -69,19 +56,14 @@ export function Paragraph({ id, text, fontSize, fontWeight }: ParagraphProps) {
         }
         if (v.annotations?.underline) {
           child = (
-            <InlineUnderline
-              key={`underline-${i}`}
-              href={v.href}
-              fontSize={fontSize}
-              fontWeight={fontWeight}
-            >
+            <InlineUnderline {...props} key={`underline-${i}`} href={v.href}>
               {child}
             </InlineUnderline>
           );
         }
         if (v.annotations?.code) {
           child = (
-            <InlineCode key={`inline-code-${i}`} href={v.href}>
+            <InlineCode {...props} key={`inline-code-${i}`} href={v.href}>
               {child}
             </InlineCode>
           );
