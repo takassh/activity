@@ -1,3 +1,4 @@
+import '@/app/extensions/notion';
 import { Link, LinkProps } from '@chakra-ui/react';
 
 export function InlineLink({
@@ -7,8 +8,13 @@ export function InlineLink({
   href: LinkProps['href'];
   children: React.ReactNode;
 }) {
+  let _href = href;
+  if (href?.startsWith('/')) {
+    _href = `/dashboard${href!.separateNotionPageId()}`;
+  }
+
   return (
-    <Link href={href} color="teal.500">
+    <Link href={_href} color="teal.500">
       {children}
     </Link>
   );

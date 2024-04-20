@@ -1,9 +1,9 @@
 import { Box, Center, Image } from '@chakra-ui/react';
 
-export function ImageBlock({ url }: { url: string }) {
+export function ImageBlock({ id, url }: { id: string; url: string }) {
   return (
     <Center>
-      <Box maxWidth="full">
+      <Box id={id} maxWidth="full">
         <Image rounded="lg" src={url} alt="image" />
       </Box>
     </Center>

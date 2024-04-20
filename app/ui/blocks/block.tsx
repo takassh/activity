@@ -86,15 +86,19 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
     if (isBlockTypeCode(v)) {
       numberListCounter = 0;
       const code = v.code.rich_text[0].plain_text ?? '';
-      return <CodeBlock key={`code-${i}`} text={code} />;
+      return <CodeBlock id={v.id} key={`code-${i}`} text={code} />;
     }
     if (isBlockTypeImage(v)) {
       numberListCounter = 0;
       if (isFileTypeExternal(v.image)) {
-        return <ImageBlock key={`image-${i}`} url={v.image.external.url} />;
+        return (
+          <ImageBlock id={v.id} key={`image-${i}`} url={v.image.external.url} />
+        );
       }
       if (isFileTypeHosted(v.image)) {
-        return <ImageBlock key={`image-${i}`} url={v.image.file.url} />;
+        return (
+          <ImageBlock id={v.id} key={`image-${i}`} url={v.image.file.url} />
+        );
       }
     }
     if (isBlockTypeToggle(v)) {

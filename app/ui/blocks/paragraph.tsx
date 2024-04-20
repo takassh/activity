@@ -73,10 +73,14 @@ export function Paragraph({ id, text, ...props }: ParagraphProps) {
       })
       .flat();
 
-    return <Box key={`paragraph-${id}`}>{paragraph}</Box>;
+    return (
+      <Box id={id} key={`paragraph-${id}`}>
+        {paragraph}
+      </Box>
+    );
   } else {
     return (
-      <Box key={`empty-${id}`}>
+      <Box id={id} key={`empty-${id}`}>
         <EmptyBlock />
       </Box>
     );
