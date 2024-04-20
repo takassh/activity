@@ -1,19 +1,16 @@
-import { Icon, Tooltip, forwardRef } from '@chakra-ui/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ClientIconProps } from './client_icon';
+import { Tooltip } from '@chakra-ui/react';
+import { MouseEventHandler } from 'react';
+import { RefIcon, RefIconProps } from './ref_icon';
 
-const CustomIcon = forwardRef<ClientIconProps, 'svg'>((props, ref) => (
-  <Icon ref={ref} as={FontAwesomeIcon} {...props} />
-));
-
-interface ToolTipIconProps extends ClientIconProps {
+export interface ToolTipIconProps extends RefIconProps {
   tooltip: string;
+  onClick?: MouseEventHandler;
 }
 
-export function ToolTipIcon({ tooltip, ...props }: ToolTipIconProps) {
+export function ToolTipIcon({ tooltip, onClick, ...props }: ToolTipIconProps) {
   return (
     <Tooltip label={tooltip}>
-      <CustomIcon {...props} />
+      <RefIcon {...props} onClick={onClick} />
     </Tooltip>
   );
 }

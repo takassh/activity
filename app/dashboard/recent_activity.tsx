@@ -24,7 +24,7 @@ import {
 import { useState } from 'react';
 import { getEvents } from '../api/data';
 import { Event } from '../types/event';
-import { ClientIcon } from '../ui/client_icon';
+import { RefIcon } from '../ui/ref_icon';
 import { ToolTipIcon } from '../ui/tool_tip_icon';
 
 const LIMIT: number = 30;
@@ -111,11 +111,7 @@ export function RecentActivity({
                     {date}
                   </Text>
                 </Flex>
-                <ClientIcon
-                  mx={2}
-                  fontSize={['md', 'lg']}
-                  icon={faArrowRight}
-                />
+                <RefIcon mx={2} fontSize={['md', 'lg']} icon={faArrowRight} />
                 {event.org && (
                   <Image
                     borderRadius="full"
