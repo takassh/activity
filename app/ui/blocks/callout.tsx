@@ -42,7 +42,6 @@ export function CalloutBlock({
       rounded="md"
       fontSize={['xs', 'sm']}
       width="full"
-      marginY={['4']}
       padding={['2', '4']}
       bgColor={`notion_${bgColor.toString()}`}
     >

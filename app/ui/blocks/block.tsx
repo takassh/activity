@@ -3,6 +3,7 @@ import {
   isBlockTypeBulletedListItem,
   isBlockTypeCallout,
   isBlockTypeCode,
+  isBlockTypeDivider,
   isBlockTypeHeading1,
   isBlockTypeHeading2,
   isBlockTypeHeading3,
@@ -13,9 +14,11 @@ import {
   isBlockTypeToggle,
 } from '@/app/types/block';
 import { isFileTypeExternal, isFileTypeHosted } from '@/app/types/file';
+import { Box } from '@chakra-ui/react';
 import { BulletedListItem } from './bulleted_list_item';
 import { CalloutBlock } from './callout';
 import { CodeBlock } from './code';
+import { CustomDivider } from './divider';
 import { H1 } from './h1';
 import { H2 } from './h2';
 import { H3 } from './h3';
@@ -126,9 +129,17 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
         />
       );
     }
+    if (isBlockTypeDivider(v)) {
+      numberListCounter = 0;
+      return <CustomDivider key={`divider-${i}`} id={v.id} />;
+    }
 
     return;
   });
 
-  return mapping.flat();
+  return mapping.flat().map((v, i) => (
+    <Box key={`box-${i}`} my={[2, 4]}>
+      {v}
+    </Box>
+  ));
 }
