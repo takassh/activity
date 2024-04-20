@@ -4,14 +4,20 @@ import { Paragraph } from './paragraph';
 
 export function Quote({ id, text }: { id: string; text: RichText[] }) {
   return (
-    <Stack divider={<StackDivider borderWidth={2} />} direction="row">
+    <Stack
+      spacing={0}
+      divider={<StackDivider borderWidth={2} />}
+      direction="row"
+    >
       <Box />
-      <Paragraph
-        id={id}
-        text={text}
-        fontSize={['sm', 'md']}
-        fontWeight="normal"
-      />
+      <Box ml={[2, 4]}>
+        <Paragraph
+          id={id}
+          text={text}
+          fontSize={['sm', 'md']}
+          fontWeight="normal"
+        />
+      </Box>
     </Stack>
   );
 }

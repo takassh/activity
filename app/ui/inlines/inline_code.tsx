@@ -9,10 +9,11 @@ export function InlineCode({ children, href, ...props }: InlineTextProps) {
   const child = (
     <Text
       {...props}
-      rounded="sm"
+      rounded="md"
       as="span"
       backgroundColor={bgColor}
-      padding="1"
+      px={1}
+      py={0.5}
       fontSize="sm"
       fontFamily={roboto_mono.style.fontFamily}
     >

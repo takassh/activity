@@ -1,5 +1,4 @@
-import { Emoji } from './emoji';
-import { File } from './file';
+import { File, HostedFile } from './file';
 import { Parent } from './parent';
 import { RichText } from './rich_text';
 import { User } from './user';
@@ -383,9 +382,19 @@ export enum TextColor {
 }
 
 export type Icon = {
-  file: File;
-  emoji: Emoji;
+  file?: HostedFile;
+  emoji?: string;
 };
+
+export function isIconTypeFile(
+  icon: Icon,
+): icon is Icon & { file: HostedFile } {
+  return icon.file !== undefined;
+}
+
+export function isIconTypeEmoji(icon: Icon): icon is Icon & { emoji: string } {
+  return icon.emoji !== undefined;
+}
 
 export enum Language {
   Abap,

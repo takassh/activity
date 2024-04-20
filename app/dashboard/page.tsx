@@ -6,7 +6,7 @@ import { getEvents, getPages } from '../api/data';
 import { Main } from './main';
 import { RecentActivity } from './recent_activity';
 
-export const revalidate = 3600;
+export const revalidate = Number(process.env.REVALIDATE);
 
 export const metadata: Metadata = {
   title: 'Home',

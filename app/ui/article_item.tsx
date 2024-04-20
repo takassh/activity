@@ -2,7 +2,7 @@
 import '@/app/extensions/date';
 import { Image, Link, Spacer, Stack, Tag, Text } from '@chakra-ui/react';
 import { RichText } from '../types/rich_text';
-import { Paragraph } from './blocks/paragraph';
+import { PlainTexts } from './blocks/plain_texts';
 
 type ArticleItemProps = {
   href: string;
@@ -29,13 +29,13 @@ export default function ArticleItem({
       <Stack spacing={[2, 4]}>
         <Stack direction="row" alignItems="start">
           <Stack>
-            <Paragraph
+            <PlainTexts
               id={id}
               text={title}
               fontSize={['md', 'lg']}
               fontWeight="bold"
             />
-            <Paragraph
+            <PlainTexts
               id={id}
               text={summary}
               fontSize={['sm', 'md']}

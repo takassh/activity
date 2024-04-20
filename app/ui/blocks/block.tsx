@@ -1,6 +1,7 @@
 import {
   Block,
   isBlockTypeBulletedListItem,
+  isBlockTypeCallout,
   isBlockTypeCode,
   isBlockTypeHeading1,
   isBlockTypeHeading2,
@@ -13,6 +14,7 @@ import {
 } from '@/app/types/block';
 import { isFileTypeExternal, isFileTypeHosted } from '@/app/types/file';
 import { BulletedListItem } from './bulleted_list_item';
+import { CalloutBlock } from './callout';
 import { CodeBlock } from './code';
 import { H1 } from './h1';
 import { H2 } from './h2';
@@ -109,6 +111,18 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
           id={v.id}
           text={v.toggle.rich_text}
           blocks={v.toggle.children}
+        />
+      );
+    }
+    if (isBlockTypeCallout(v)) {
+      numberListCounter = 0;
+      return (
+        <CalloutBlock
+          key={`callout-${i}`}
+          id={v.id}
+          text={v.callout.rich_text}
+          icon={v.callout.icon}
+          bgColor={v.callout.color}
         />
       );
     }
