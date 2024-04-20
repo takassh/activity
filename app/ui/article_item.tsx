@@ -54,14 +54,14 @@ export default function ArticleItem({
           />
         </Stack>
         <Stack direction="row" alignItems="end">
+          <Text fontSize={['xs']} noOfLines={1} color="gray.500">
+            {new Date(createdAt).formattedDateTime()}
+          </Text>
           {tags.map((tag) => (
             <Tag key={`tag-${tag}`} fontSize={['xs', 'sm']}>
               {tag}
             </Tag>
           ))}
-          <Text fontSize={['xs']} noOfLines={1} color="gray.500">
-            {new Date(createdAt).formattedDateTime()}
-          </Text>
         </Stack>
       </Stack>
     </Link>

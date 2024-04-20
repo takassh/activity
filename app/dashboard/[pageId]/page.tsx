@@ -9,7 +9,7 @@ import { RichText } from '@/app/types/rich_text';
 import { Blocks } from '@/app/ui/blocks/block';
 import { H1 } from '@/app/ui/blocks/h1';
 import { Paragraph } from '@/app/ui/blocks/paragraph';
-import { ToolTipIconModal } from '@/app/ui/modal';
+import { ToolTipIconModal } from '@/app/ui/tool_tip_icon_modal';
 import { Box, Flex, Img, Stack, Text } from '@chakra-ui/react';
 import { faGhost } from '@fortawesome/free-solid-svg-icons';
 import { Metadata, ResolvingMetadata } from 'next';
