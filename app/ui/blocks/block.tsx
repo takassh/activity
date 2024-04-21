@@ -91,7 +91,14 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
     if (isBlockTypeCode(v)) {
       numberListCounter = 0;
       const code = v.code.rich_text[0].plain_text ?? '';
-      return <CodeBlock id={v.id} key={`code-${i}`} text={code} />;
+      return (
+        <CodeBlock
+          id={v.id}
+          key={`code-${i}`}
+          text={code}
+          language={v.code.language.toString()}
+        />
+      );
     }
     if (isBlockTypeImage(v)) {
       numberListCounter = 0;
@@ -138,7 +145,7 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
   });
 
   return mapping.flat().map((v, i) => (
-    <Box key={`box-${i}`} my={[2, 4]}>
+    <Box key={`box-${i}`} my={2}>
       {v}
     </Box>
   ));
