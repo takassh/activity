@@ -151,7 +151,7 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
       const headersList = headers();
       const header_url = headersList.get('x-url') ?? '';
       const url = new URL(header_url);
-      const href = `${url.protocol}/${url.host}/dashboard/${v.link_to_page.page_id}`;
+      const href = `${url.protocol}//${url.host}/dashboard/${v.link_to_page.page_id}`;
       const ogp = await getOGP(href);
       return (
         <OGP
