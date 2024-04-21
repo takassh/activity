@@ -19,10 +19,10 @@ import {
 } from '@chakra-ui/react';
 import { transparentize } from '@chakra-ui/theme-tools';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import hljs from 'highlight.js/lib/core';
-import rust from 'highlight.js/lib/languages/rust';
+import hljs from 'highlight.js';
 import { useState } from 'react';
 import { RefIcon } from '../ref_icon';
+import { Mermaid } from './mermaid';
 
 export function CodeBlock({
   id,
@@ -33,18 +33,26 @@ export function CodeBlock({
   text: string;
   language: string;
 }) {
-  hljs.registerLanguage('rust', rust);
-  const highlightedCode = hljs.highlight(text, { language: language }).value;
   const { colorMode } = useColorMode();
-  if (colorMode == 'light') {
-    import('highlight.js/styles/github.css');
-  } else {
-    import('highlight.js/styles/github-dark.css');
-  }
   const bg = useColorModeValue(
     'gray.100',
     transparentize('gray.200', 0.16)(theme),
   );
+
+  let codeBlock: React.ReactNode;
+  if (language === 'mermaid') {
+    console.log(colorMode);
+    codeBlock = <Mermaid colorMode={colorMode}>{text}</Mermaid>;
+  } else {
+    const highlightedCode = hljs.highlight(text, { language: language }).value;
+    if (colorMode == 'light') {
+      import('highlight.js/styles/github.css');
+    } else {
+      import('highlight.js/styles/github-dark.css');
+    }
+
+    codeBlock = <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />;
+  }
 
   const [result, setResult] = useState<ExecuteResponse>();
   const [loading, setLoading] = useState(false);
@@ -77,7 +85,7 @@ export function CodeBlock({
         </Flex>
 
         <Box overflow="scroll" px={[4, 6]} pb={[4, 6]} as="pre">
-          <code dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+          {codeBlock}
         </Box>
       </Box>
 
