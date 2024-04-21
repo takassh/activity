@@ -40,3 +40,8 @@ export type GetEventsResponse = {
 export type Event = {
   contents: string;
 };
+
+export type ExecuteResponse = {
+  result: string;
+  error?: string;
+};
