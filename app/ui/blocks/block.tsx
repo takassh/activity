@@ -1,3 +1,4 @@
+import { getOGP } from '@/app/api/data';
 import {
   Block,
   isBlockTypeBulletedListItem,
@@ -8,6 +9,7 @@ import {
   isBlockTypeHeading2,
   isBlockTypeHeading3,
   isBlockTypeImage,
+  isBlockTypeLinkToPage,
   isBlockTypeNumberedListItem,
   isBlockTypeParagraph,
   isBlockTypeQuote,
@@ -15,6 +17,8 @@ import {
 } from '@/app/types/block';
 import { isFileTypeExternal, isFileTypeHosted } from '@/app/types/file';
 import { Box } from '@chakra-ui/react';
+import { headers } from 'next/headers';
+import { OGP } from '../ogp';
 import { BulletedListItem } from './bulleted_list_item';
 import { CalloutBlock } from './callout';
 import { CodeBlock } from './code';
@@ -30,7 +34,7 @@ import { ToggleBlock } from './toggle';
 
 export function Blocks({ blocks }: { blocks: Block[] }) {
   let numberListCounter = 0;
-  const mapping = blocks.map((v, i) => {
+  const mapping = blocks.map(async (v, i) => {
     if (isBlockTypeParagraph(v)) {
       numberListCounter = 0;
       return (
@@ -139,6 +143,27 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
     if (isBlockTypeDivider(v)) {
       numberListCounter = 0;
       return <CustomDivider key={`divider-${i}`} id={v.id} />;
+    }
+
+    if (isBlockTypeLinkToPage(v)) {
+      numberListCounter = 0;
+
+      const headersList = headers();
+      const header_url = headersList.get('x-url') ?? '';
+      const url = new URL(header_url);
+      const href = `${url.protocol}/${url.host}/dashboard/${v.link_to_page.page_id}`;
+      const ogp = await getOGP(href);
+      return (
+        <OGP
+          key={`ogp-${i}`}
+          host={url.hostname}
+          title={ogp.title}
+          summary={ogp.description}
+          imageUrl={ogp.imageSrc}
+          faviconUrl={ogp.favIconImage}
+          href={href}
+        />
+      );
     }
 
     return;

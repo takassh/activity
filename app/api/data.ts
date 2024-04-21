@@ -1,5 +1,6 @@
 'use server';
 
+import { parse } from 'node-html-parser';
 import { Block } from '../types/block';
 import { Event } from '../types/event';
 import { Page } from '../types/notion_page';
@@ -9,6 +10,7 @@ import {
   GetPageResponse,
   GetPagesResponse,
   GetPostsResponse,
+  OGPResponse,
 } from './response';
 
 type Contents = Event | Page;
@@ -61,4 +63,79 @@ export async function getEvents(page: number, limit: number): Promise<Event[]> {
     return JSON.parse(event.contents);
   }) as Event[];
   return events;
+}
+
+const allowedTags = [
+  'title',
+  'og:title',
+  'twitter:title',
+  'description',
+  'og:description',
+  'twitter:description',
+  'og:image',
+  'twitter:image',
+  'icon',
+  'apple-touch-icon',
+  'shortcut icon',
+];
+
+export async function getOGP(url: string): Promise<OGPResponse> {
+  const response = await fetch(url);
+  const html = await response.text();
+
+  const root = parse(html);
+  const objectMap: { [key: string]: string } = {};
+
+  root
+    .querySelectorAll('meta')
+    .forEach(({ attributes }: { attributes: { [key: string]: string } }) => {
+      const property =
+        attributes.property || attributes.name || attributes.href;
+      if (!objectMap[property] && allowedTags.includes(property)) {
+        objectMap[property] = attributes.content;
+      }
+    });
+
+  root
+    .querySelectorAll('link')
+    .forEach(({ attributes }: { attributes: { [key: string]: string } }) => {
+      const { rel, href } = attributes;
+      if (rel && href && allowedTags.includes(rel)) {
+        objectMap[rel] = href;
+      }
+    });
+
+  // title, description, imageSrc
+  const title =
+    objectMap['og:title'] ||
+    objectMap['twitter:title'] ||
+    root.querySelector('title')?.innerText ||
+    '';
+
+  const description =
+    objectMap['og:description'] || objectMap['description'] || '';
+
+  let imageSrc = objectMap['og:image'] || objectMap['twitter:image'] || '';
+
+  let favIconImage =
+    objectMap['apple-touch-icon'] ||
+    objectMap['icon'] ||
+    objectMap['shortcut icon'] ||
+    '';
+
+  const _url = new URL(url);
+
+  if (!imageSrc.startsWith('http')) {
+    imageSrc = `${_url.protocol}//${_url.host}${imageSrc}`;
+  }
+  if (!favIconImage.startsWith('http')) {
+    favIconImage = `${_url.protocol}//${_url.host}${favIconImage}`;
+  }
+
+  return {
+    title,
+    description,
+    imageSrc,
+    favIconImage,
+  };
 }

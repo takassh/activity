@@ -1,5 +1,5 @@
-import { extendTheme } from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools';
+import { extendTheme, theme } from '@chakra-ui/react';
+import { mode, transparentize } from '@chakra-ui/theme-tools';
 import { Inter, Open_Sans, Roboto_Mono } from 'next/font/google';
 
 const open_sans = Open_Sans({
@@ -12,7 +12,7 @@ const inter = Inter({
 
 export const roboto_mono = Roboto_Mono({ subsets: ['latin'] });
 
-export const theme = extendTheme({
+export const customTheme = extendTheme({
   components: {
     Link: {
       baseStyle: {
@@ -51,6 +51,10 @@ export const theme = extendTheme({
       bg: {
         default: 'gray.50',
         _dark: 'gray.800',
+      },
+      bg_code: {
+        default: 'gray.100',
+        _dark: transparentize('gray.200', 0.16)(theme),
       },
       notion_default: {
         default: 'gray.100',

@@ -1,6 +1,6 @@
 'use client';
 
-import { theme } from '@/theme';
+import { customTheme } from '@/theme';
 import {
   ChakraProvider,
   ColorModeScript,
@@ -26,9 +26,9 @@ export function Providers({
   } as typeof cookieStorageManager;
 
   return (
-    <ChakraProvider colorModeManager={cookieManager} theme={theme}>
+    <ChakraProvider colorModeManager={cookieManager} theme={customTheme}>
       <ColorModeScript
-        initialColorMode={theme.config.initialColorMode}
+        initialColorMode={customTheme.config.initialColorMode}
         type="cookie"
       />
       <Analytics />

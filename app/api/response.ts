@@ -45,3 +45,10 @@ export type ExecuteResponse = {
   result: string;
   error?: string;
 };
+
+export type OGPResponse = {
+  title: string;
+  description: string;
+  imageSrc: string;
+  favIconImage: string;
+};

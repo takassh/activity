@@ -1,7 +1,6 @@
 'use client';
 import { evaluate } from '@/app/api/action';
 import { ExecuteResponse } from '@/app/api/response';
-import { theme } from '@/theme';
 import {
   Accordion,
   AccordionButton,
@@ -15,9 +14,7 @@ import {
   Stack,
   Tag,
   useColorMode,
-  useColorModeValue,
 } from '@chakra-ui/react';
-import { transparentize } from '@chakra-ui/theme-tools';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import hljs from 'highlight.js';
 import { useState } from 'react';
@@ -34,14 +31,9 @@ export function CodeBlock({
   language: string;
 }) {
   const { colorMode } = useColorMode();
-  const bg = useColorModeValue(
-    'gray.100',
-    transparentize('gray.200', 0.16)(theme),
-  );
 
   let codeBlock: React.ReactNode;
   if (language === 'mermaid') {
-    console.log(colorMode);
     codeBlock = <Mermaid colorMode={colorMode}>{text}</Mermaid>;
   } else {
     const highlightedCode = hljs.highlight(text, { language: language }).value;
@@ -66,7 +58,13 @@ export function CodeBlock({
 
   return (
     <Stack>
-      <Box id={id} rounded="md" fontSize={['xs', 'sm']} width="full" bg={bg}>
+      <Box
+        id={id}
+        rounded="md"
+        fontSize={['xs', 'sm']}
+        width="full"
+        bg="bg_code"
+      >
         <Flex>
           <Spacer />
           {language === 'rust' && text.includes('fn main() {') && (
@@ -102,7 +100,7 @@ export function CodeBlock({
                   rounded="md"
                   fontSize={['xs', 'sm']}
                   width="full"
-                  bg={bg}
+                  bg="bg_code"
                   overflow="scroll"
                 >
                   Running...
@@ -114,7 +112,7 @@ export function CodeBlock({
                   rounded="md"
                   fontSize={['xs', 'sm']}
                   width="full"
-                  bg={bg}
+                  bg="bg_code"
                   as="pre"
                   overflow="scroll"
                 >

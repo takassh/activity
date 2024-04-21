@@ -45,6 +45,7 @@ export type Block = {
   to_do?: ToDoValue;
   toggle?: ToggleValue;
   video?: VideoValue;
+  link_to_page?: Parent;
 };
 
 export function isBlockTypeBookmark(
@@ -225,6 +226,14 @@ export function isBlockTypeVideo(
   block: Block,
 ): block is Block & { video: VideoValue } {
   return block.video !== undefined;
+}
+
+export function isBlockTypeLinkToPage(
+  block: Block,
+): block is Block & { link_to_page: Parent } & { page_id: string } {
+  return (
+    block.link_to_page !== undefined && block.link_to_page.page_id !== undefined
+  );
 }
 
 export type BookmarkValue = {
