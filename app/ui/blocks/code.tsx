@@ -95,6 +95,7 @@ export function CodeBlock({
                   fontSize={['xs', 'sm']}
                   width="full"
                   bg={bg}
+                  overflow="scroll"
                 >
                   Running...
                 </Box>
@@ -107,6 +108,7 @@ export function CodeBlock({
                   width="full"
                   bg={bg}
                   as="pre"
+                  overflow="scroll"
                 >
                   {result.error ? result.error : result.result}
                 </Box>
