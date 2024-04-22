@@ -18,7 +18,7 @@ export function OGP({
 }) {
   return (
     <Box
-      maxWidth={700}
+      maxWidth={800}
       borderWidth="1px"
       borderRadius="lg"
       height={[100, 130]}
@@ -56,9 +56,12 @@ export function OGP({
           <Image
             src={imageUrl}
             height={'100%'}
-            maxW={[200, 220]}
-            objectFit="fill"
+            width={'100%'}
+            maxW={[130, 220]}
+            minW={[130, 220]}
+            objectFit="cover"
             borderRightRadius={'lg'}
+            display="block"
             alt="article image"
           />
         </Flex>

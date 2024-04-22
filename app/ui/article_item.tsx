@@ -47,7 +47,9 @@ export default function ArticleItem({
           <Image
             src={imageUrl}
             height={[100, 120]}
-            width={[100, 120]}
+            width='100%'
+            maxW={[100, 150]}
+            minW={[100, 150]}
             rounded="lg"
             objectFit="cover"
             alt="article image"

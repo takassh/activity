@@ -151,7 +151,6 @@ export async function Blocks({ blocks }: { blocks: Block[] }) {
     }
 
     if (isBlockTypeLinkToPage(v)) {
-      //  <></>
       numberListCounter = 0;
 
       const headersList = headers();
