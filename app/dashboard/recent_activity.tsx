@@ -14,6 +14,7 @@ import {
   faArrowRight,
   faArrowUp,
   faCheck,
+  faCodeFork,
   faCodePullRequest,
   faEye,
   faMinus,
@@ -86,6 +87,10 @@ export function RecentActivity({
           if (event.type === 'DeleteEvent') {
             icon = faMinus;
             tooltip = 'Deleted a repo';
+          }
+          if (event.type === 'ForkEvent') {
+            icon = faCodeFork;
+            tooltip = 'Forked this repo';
           }
 
           return (

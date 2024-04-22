@@ -68,7 +68,9 @@ export async function Blocks({ blocks }: { blocks: Block[] }) {
     }
     if (isBlockTypeQuote(v)) {
       numberListCounter = 0;
-      <Quote key={`quote-${v.id}`} id={v.id} text={v.quote.rich_text} />;
+      items.push(
+        <Quote key={`quote-${v.id}`} id={v.id} text={v.quote.rich_text} />,
+      );
     }
     if (isBlockTypeBulletedListItem(v)) {
       numberListCounter = 0;
@@ -147,7 +149,7 @@ export async function Blocks({ blocks }: { blocks: Block[] }) {
     }
     if (isBlockTypeDivider(v)) {
       numberListCounter = 0;
-      <CustomDivider key={`divider-${v.id}`} id={v.id} />;
+      items.push(<CustomDivider key={`divider-${v.id}`} id={v.id} />);
     }
 
     if (isBlockTypeLinkToPage(v)) {
