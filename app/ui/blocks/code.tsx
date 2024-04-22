@@ -41,7 +41,11 @@ export function CodeBlock({
 
   let codeBlock: React.ReactNode;
   if (language === 'mermaid') {
-    codeBlock = <Mermaid colorMode={colorMode}>{text}</Mermaid>;
+    codeBlock = (
+      <Mermaid id={id} colorMode={colorMode}>
+        {text}
+      </Mermaid>
+    );
   } else {
     const highlightedCode = hljs.highlight(text, { language: language }).value;
     if (colorMode == 'light') {
