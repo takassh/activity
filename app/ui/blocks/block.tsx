@@ -32,120 +32,126 @@ import { Paragraph } from './paragraph';
 import { Quote } from './quote';
 import { ToggleBlock } from './toggle';
 
-export function Blocks({ blocks }: { blocks: Block[] }) {
+export async function Blocks({ blocks }: { blocks: Block[] }) {
   let numberListCounter = 0;
-  const mapping = blocks.map(async (v, i) => {
+  let items = [];
+  for (const v of blocks) {
     if (isBlockTypeParagraph(v)) {
       numberListCounter = 0;
-      return (
+      items.push(
         <Paragraph
-          key={`paragraph-${i}`}
+          key={`paragraph-${v.id}`}
           id={v.id}
           text={v.paragraph?.rich_text ?? []}
           fontSize={['sm', 'md']}
           fontWeight="normal"
-        />
+        />,
       );
     }
     if (isBlockTypeHeading1(v)) {
       numberListCounter = 0;
-      return (
-        <H1 key={`heading_1-${i}`} id={v.id} text={v.heading_1.rich_text} />
+      items.push(
+        <H1 key={`heading_1-${v.id}`} id={v.id} text={v.heading_1.rich_text} />,
       );
     }
     if (isBlockTypeHeading2(v)) {
       numberListCounter = 0;
-      return (
-        <H2 key={`heading_2-${i}`} id={v.id} text={v.heading_2.rich_text} />
+      items.push(
+        <H2 key={`heading_2-${v.id}`} id={v.id} text={v.heading_2.rich_text} />,
       );
     }
     if (isBlockTypeHeading3(v)) {
       numberListCounter = 0;
-      return (
-        <H3 key={`heading_3-${i}`} id={v.id} text={v.heading_3.rich_text} />
+      items.push(
+        <H3 key={`heading_3-${v.id}`} id={v.id} text={v.heading_3.rich_text} />,
       );
     }
     if (isBlockTypeQuote(v)) {
       numberListCounter = 0;
-      return <Quote key={`quote-${i}`} id={v.id} text={v.quote.rich_text} />;
+      <Quote key={`quote-${v.id}`} id={v.id} text={v.quote.rich_text} />;
     }
     if (isBlockTypeBulletedListItem(v)) {
       numberListCounter = 0;
 
-      return (
+      items.push(
         <BulletedListItem
-          key={`bulleted_list_item-${i}`}
+          key={`bulleted_list_item-${v.id}`}
           id={v.id}
           text={v.bulleted_list_item.rich_text}
           blocks={v.bulleted_list_item.children}
-        />
+        />,
       );
     }
     if (isBlockTypeNumberedListItem(v)) {
       numberListCounter += 1;
-      return (
+      items.push(
         <NumberedListItem
-          key={`numbered_list_item-${i}`}
+          key={`numbered_list_item-${v.id}`}
           id={v.id}
           text={v.numbered_list_item.rich_text}
           number={numberListCounter}
-        />
+        />,
       );
     }
     if (isBlockTypeCode(v)) {
       numberListCounter = 0;
       const code = v.code.rich_text[0].plain_text ?? '';
-      return (
+      items.push(
         <CodeBlock
           id={v.id}
-          key={`code-${i}`}
+          key={`code-${v.id}`}
           text={code}
           language={v.code.language.toString()}
-        />
+        />,
       );
     }
     if (isBlockTypeImage(v)) {
       numberListCounter = 0;
       if (isFileTypeExternal(v.image)) {
-        return (
-          <ImageBlock id={v.id} key={`image-${i}`} url={v.image.external.url} />
+        items.push(
+          <ImageBlock
+            id={v.id}
+            key={`image-${v.id}`}
+            url={v.image.external.url}
+          />,
         );
       }
       if (isFileTypeHosted(v.image)) {
-        return (
-          <ImageBlock id={v.id} key={`image-${i}`} url={v.image.file.url} />
+        items.push(
+          <ImageBlock id={v.id} key={`image-${v.id}`} url={v.image.file.url} />,
         );
       }
     }
     if (isBlockTypeToggle(v)) {
       numberListCounter = 0;
-      return (
+      items.push(
         <ToggleBlock
-          key={`toggle-${i}`}
+          key={`toggle-${v.id}`}
           id={v.id}
           text={v.toggle.rich_text}
           blocks={v.toggle.children}
-        />
+        />,
       );
     }
     if (isBlockTypeCallout(v)) {
       numberListCounter = 0;
-      return (
+      items.push(
         <CalloutBlock
-          key={`callout-${i}`}
+          key={`callout-${v.id}`}
           id={v.id}
           text={v.callout.rich_text}
           icon={v.callout.icon}
           bgColor={v.callout.color}
-        />
+        />,
       );
     }
     if (isBlockTypeDivider(v)) {
       numberListCounter = 0;
-      return <CustomDivider key={`divider-${i}`} id={v.id} />;
+      <CustomDivider key={`divider-${v.id}`} id={v.id} />;
     }
 
     if (isBlockTypeLinkToPage(v)) {
+      //  <></>
       numberListCounter = 0;
 
       const headersList = headers();
@@ -153,23 +159,21 @@ export function Blocks({ blocks }: { blocks: Block[] }) {
       const url = new URL(header_url);
       const href = `${url.protocol}//${url.host}/dashboard/${v.link_to_page.page_id}`;
       const ogp = await getOGP(href);
-      return (
+      items.push(
         <OGP
-          key={`ogp-${i}`}
+          key={`ogp-${v.id}`}
           host={url.hostname}
           title={ogp.title}
           summary={ogp.description}
           imageUrl={ogp.imageSrc}
           faviconUrl={ogp.favIconImage}
           href={href}
-        />
+        />,
       );
     }
+  }
 
-    return;
-  });
-
-  return mapping.flat().map((v, i) => (
+  return items.map((v, i) => (
     <Box key={`box-${i}`} my={2}>
       {v}
     </Box>

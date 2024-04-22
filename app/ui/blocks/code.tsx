@@ -13,8 +13,11 @@ import {
   Spacer,
   Stack,
   Tag,
+  theme,
   useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
+import { transparentize } from '@chakra-ui/theme-tools';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import hljs from 'highlight.js';
 import { useState } from 'react';
@@ -30,6 +33,10 @@ export function CodeBlock({
   text: string;
   language: string;
 }) {
+  const bg = useColorModeValue(
+    'gray.100',
+    transparentize('gray.200', 0.16)(theme),
+  );
   const { colorMode } = useColorMode();
 
   let codeBlock: React.ReactNode;
@@ -58,13 +65,7 @@ export function CodeBlock({
 
   return (
     <Stack>
-      <Box
-        id={id}
-        rounded="md"
-        fontSize={['xs', 'sm']}
-        width="full"
-        bg="bg_code"
-      >
+      <Box id={id} rounded="md" fontSize={['xs', 'sm']} width="full" bg={bg}>
         <Flex>
           <Spacer />
           {language === 'rust' && text.includes('fn main() {') && (
@@ -100,7 +101,7 @@ export function CodeBlock({
                   rounded="md"
                   fontSize={['xs', 'sm']}
                   width="full"
-                  bg="bg_code"
+                  bg={bg}
                   overflow="scroll"
                 >
                   Running...
@@ -112,7 +113,7 @@ export function CodeBlock({
                   rounded="md"
                   fontSize={['xs', 'sm']}
                   width="full"
-                  bg="bg_code"
+                  bg={bg}
                   as="pre"
                   overflow="scroll"
                 >
