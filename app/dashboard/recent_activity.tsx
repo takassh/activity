@@ -92,6 +92,10 @@ export function RecentActivity({
             icon = faCodeFork;
             tooltip = 'Forked this repo';
           }
+          if (event.type === 'IssueCommentEvent') {
+            icon = faPencil;
+            tooltip = 'Commented on an issue';
+          }
 
           return (
             <Link
