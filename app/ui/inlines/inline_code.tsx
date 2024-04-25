@@ -1,12 +1,11 @@
 'use client';
 import { roboto_mono } from '@/theme';
 import { Text, useColorModeValue } from '@chakra-ui/react';
-import { InlineLink } from './inline_link';
 import { InlineTextProps } from './inline_text';
 
-export function InlineCode({ children, href, ...props }: InlineTextProps) {
+export function InlineCode({ children, ...props }: InlineTextProps) {
   const bgColor = useColorModeValue('gray.100', 'gray.700');
-  const child = (
+  return (
     <Text
       {...props}
       rounded="md"
@@ -20,10 +19,4 @@ export function InlineCode({ children, href, ...props }: InlineTextProps) {
       {children}
     </Text>
   );
-
-  if (href == null) {
-    return child;
-  } else {
-    return <InlineLink href={href}>{child}</InlineLink>;
-  }
 }

@@ -33,7 +33,7 @@ export function Mermaid({
     'gray.100',
     'gray.600',
     'gray.600',
-    'gray.900',
+    'gray.300',
     'gray.300',
   ]);
 
@@ -48,9 +48,15 @@ export function Mermaid({
       noteBkgColor: colorMode == 'light' ? light[3] : dark[3],
       noteTextColor: colorMode == 'light' ? light[4] : dark[4],
       tertiaryColor: colorMode == 'light' ? light[5] : dark[5],
+      secondaryBorderColor: colorMode == 'light' ? light[6] : dark[6],
+      secondaryTextColor: colorMode == 'light' ? light[7] : dark[7],
+      secondaryColor: colorMode == 'light' ? light[5] : dark[5],
       tertiaryBorderColor: colorMode == 'light' ? light[6] : dark[6],
       tertiaryTextColor: colorMode == 'light' ? light[7] : dark[7],
       lineColor: colorMode == 'light' ? light[8] : dark[8],
+      actorBorder: colorMode == 'light' ? light[8] : dark[8],
+      signalColor: colorMode == 'light' ? light[7] : dark[7],
+      signalTextColor: colorMode == 'light' ? light[7] : dark[7],
     },
     startOnLoad: false,
   });
