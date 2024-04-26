@@ -58,5 +58,5 @@ export async function generateCoverImage(
     },
   );
 
-  revalidateTag(`pags/${pageId}`);
+  revalidateTag(`page/${pageId}`);
 }

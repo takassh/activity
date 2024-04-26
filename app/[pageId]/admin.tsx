@@ -3,6 +3,7 @@ import { generateCoverImage } from '@/app/api/action';
 import { ToolTipIconModal } from '@/app/ui/tool_tip_icon_modal';
 import { Button, HStack, Stack, Text } from '@chakra-ui/react';
 import { faEraser, faImage } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 export function AdminComponent({
@@ -24,6 +25,7 @@ export function AdminComponent({
               setIsGenerating(true);
               await generateCoverImage(pageId, title);
               setIsGenerating(false);
+              useRouter().reload();
             }}
             colorScheme="blue"
             isLoading={isGenerating}
