@@ -45,6 +45,7 @@ export async function getPages(
 
 export async function getPage(pageId: string): Promise<Page> {
   const response = await fetch(process.env.API_BASE_URI + `/pages/${pageId}`, {
+    next: { tags: [`pags/${pageId}`] },
     headers: { Authorization: process.env.API_KEY as string },
   });
   const json = (await response.json()) as GetPageResponse;

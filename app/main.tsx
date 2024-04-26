@@ -8,8 +8,8 @@ import {
   TabsProps,
 } from '@chakra-ui/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Page } from '../types/notion_page';
 import { ArticleTabPanel } from './article_tab_panel';
+import { Page } from './types/notion_page';
 
 const tabs = ['all', 'rust', 'nextjs', 'flutter', 'golang', 'aws', 'web3'];
 

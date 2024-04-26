@@ -2,6 +2,7 @@
 
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import { revalidateTag } from 'next/cache';
 import { ExecuteResponse } from './response';
 
 export async function authenticate(
@@ -37,4 +38,25 @@ export async function evaluate(code: string): Promise<ExecuteResponse> {
   });
 
   return res.json();
+}
+
+export async function generateCoverImage(
+  pageId: string,
+  title: string,
+): Promise<void> {
+  await fetch(
+    process.env.API_BASE_URI + `/pages/${pageId}/generate-cover-image`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: process.env.API_KEY as string,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt: `An attractive image for \"${title}\"`,
+      }),
+    },
+  );
+
+  revalidateTag(`pags/${pageId}`);
 }

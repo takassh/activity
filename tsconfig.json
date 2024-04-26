@@ -28,7 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/api/[...nextauth].js",
-    "app/dashboard/[pageId]"
+    "app/[pageId]"
   ],
   "exclude": ["node_modules"]
 }

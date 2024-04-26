@@ -10,7 +10,7 @@ export function InlineLink({
 }) {
   let _href = href;
   if (href?.startsWith('/')) {
-    _href = `/dashboard${href!.separateNotionPageId()}`;
+    _href = `/${href!.separateNotionPageId()}`;
   }
 
   return (

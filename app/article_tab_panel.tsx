@@ -1,16 +1,16 @@
 'use client';
 import { Box, Button, Stack, StackDivider, TabPanel } from '@chakra-ui/react';
 import { useState } from 'react';
-import { getPages } from '../api/data';
-import { isFileTypeExternal, isFileTypeHosted } from '../types/file';
+import { getPages } from './api/data';
+import { isFileTypeExternal, isFileTypeHosted } from './types/file';
 import {
   IsPagePropertyTypeMultiSelect,
   IsPagePropertyTypeRichText,
   IsPagePropertyTypeTitle,
   Page,
-} from '../types/notion_page';
-import { RichText } from '../types/rich_text';
-import ArticleItem from '../ui/article_item';
+} from './types/notion_page';
+import { RichText } from './types/rich_text';
+import ArticleItem from './ui/article_item';
 
 const LIMIT: number = 20;
 
@@ -58,7 +58,7 @@ export function ArticleTabPanel({
           return (
             <Box key={`page-${page.id}`} py={2}>
               <ArticleItem
-                href={`/dashboard/${page.id}`}
+                href={`/${page.id}`}
                 id={page.id}
                 title={title}
                 summary={summary}

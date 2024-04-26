@@ -23,10 +23,10 @@ import {
   faQuestion,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import { getEvents } from '../api/data';
-import { Event } from '../types/event';
-import { RefIcon } from '../ui/ref_icon';
-import { ToolTipIcon } from '../ui/tool_tip_icon';
+import { getEvents } from './api/data';
+import { Event } from './types/event';
+import { RefIcon } from './ui/ref_icon';
+import { ToolTipIcon } from './ui/tool_tip_icon';
 
 const LIMIT: number = 30;
 

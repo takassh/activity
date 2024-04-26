@@ -1,3 +1,4 @@
+import { isLoggedInAdmin } from '@/app/api/auth';
 import { getBlock, getPage } from '@/app/api/data';
 import '@/app/extensions/date';
 import { isFileTypeExternal, isFileTypeHosted } from '@/app/types/file';
@@ -13,6 +14,7 @@ import { ToolTipIconModal } from '@/app/ui/tool_tip_icon_modal';
 import { Box, Flex, Img, Stack, Text } from '@chakra-ui/react';
 import { faGhost } from '@fortawesome/free-solid-svg-icons';
 import { Metadata, ResolvingMetadata } from 'next';
+import { AdminComponent } from './admin';
 
 export const revalidate = Number(process.env.REVALIDATE);
 
@@ -64,6 +66,7 @@ export default async function Page({
 }: {
   params: { pageId: string };
 }) {
+  const isAdmin = await isLoggedInAdmin();
   const page = await getPage(pageId);
   const blocks = await getBlock(pageId);
   const created_date = new Date(page.created_time).formattedDateTime();
@@ -137,6 +140,13 @@ export default async function Page({
             編集 {edited_date}
           </Text>
         </Stack>
+
+        {isAdmin && (
+          <AdminComponent
+            pageId={pageId}
+            title={title.map((text) => text.plain_text ?? '').join('')}
+          />
+        )}
 
         <Box pt={8} />
         <Blocks blocks={blocks} />
