@@ -26,7 +26,7 @@ export function AdminComponent({
               setIsGenerating(true);
               await generateCoverImage(pageId, title);
               setIsGenerating(false);
-              router.reload();
+              router.refresh();
             }}
             colorScheme="blue"
             isLoading={isGenerating}
