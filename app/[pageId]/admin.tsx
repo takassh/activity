@@ -14,6 +14,7 @@ export function AdminComponent({
   title: string;
 }) {
   let [isGenerating, setIsGenerating] = useState(false);
+  let router = useRouter();
 
   return (
     <HStack mt={4} spacing={4}>
@@ -25,7 +26,7 @@ export function AdminComponent({
               setIsGenerating(true);
               await generateCoverImage(pageId, title);
               setIsGenerating(false);
-              useRouter().reload();
+              router.reload();
             }}
             colorScheme="blue"
             isLoading={isGenerating}

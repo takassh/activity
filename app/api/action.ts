@@ -48,6 +48,7 @@ export async function generateCoverImage(
     process.env.API_BASE_URI + `/pages/${pageId}/generate-cover-image`,
     {
       method: 'POST',
+      signal: AbortSignal.timeout(20000),
       headers: {
         Authorization: process.env.API_KEY as string,
         'Content-Type': 'application/json',
