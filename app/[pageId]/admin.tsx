@@ -3,7 +3,7 @@ import { generateCoverImage } from '@/app/api/action';
 import { ToolTipIconModal } from '@/app/ui/tool_tip_icon_modal';
 import { Button, HStack, Stack, Text } from '@chakra-ui/react';
 import { faEraser, faImage } from '@fortawesome/free-solid-svg-icons';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export function AdminComponent({
