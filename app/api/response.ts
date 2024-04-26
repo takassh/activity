@@ -52,3 +52,8 @@ export type OGPResponse = {
   imageSrc: string;
   favIconImage: string;
 };
+
+export type WSResponse = {
+  action: String;
+  message: String;
+};

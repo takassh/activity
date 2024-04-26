@@ -145,6 +145,7 @@ export default async function Page({
           <AdminComponent
             pageId={pageId}
             title={title.map((text) => text.plain_text ?? '').join('')}
+            api_key={`${process.env.API_KEY}`}
           />
         )}
 
