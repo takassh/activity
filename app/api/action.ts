@@ -61,3 +61,21 @@ export async function generateCoverImage(
 
   revalidateTag(`page/${pageId}`);
 }
+
+export async function generateSummary(
+  pageId: string,
+  body: string,
+): Promise<void> {
+  await fetch(process.env.API_BASE_URI + `/pages/${pageId}/generate-summary`, {
+    method: 'POST',
+    headers: {
+      Authorization: process.env.API_KEY as string,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      text: body,
+    }),
+  });
+
+  revalidateTag(`page/${pageId}`);
+}

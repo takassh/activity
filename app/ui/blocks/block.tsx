@@ -32,9 +32,16 @@ import { Paragraph } from './paragraph';
 import { Quote } from './quote';
 import { ToggleBlock } from './toggle';
 
-export async function Blocks({ blocks }: { blocks: Block[] }) {
+export async function Blocks({
+  blocks,
+  is_plain_texts = false,
+}: {
+  blocks: Block[];
+  is_plain_texts?: boolean;
+}) {
   let numberListCounter = 0;
   let items = [];
+  let plainTexts = '';
   for (const v of blocks) {
     if (isBlockTypeParagraph(v)) {
       numberListCounter = 0;
@@ -47,30 +54,45 @@ export async function Blocks({ blocks }: { blocks: Block[] }) {
           fontWeight="normal"
         />,
       );
+      plainTexts +=
+        v.paragraph?.rich_text.map((v) => v.plain_text).join('') ?? '';
+      plainTexts += '\n';
     }
     if (isBlockTypeHeading1(v)) {
       numberListCounter = 0;
       items.push(
         <H1 key={`heading_1-${v.id}`} id={v.id} text={v.heading_1.rich_text} />,
       );
+
+      plainTexts +=
+        v.heading_1?.rich_text.map((v) => v.plain_text).join('') ?? '';
+      plainTexts += '\n';
     }
     if (isBlockTypeHeading2(v)) {
       numberListCounter = 0;
       items.push(
         <H2 key={`heading_2-${v.id}`} id={v.id} text={v.heading_2.rich_text} />,
       );
+      plainTexts +=
+        v.heading_2?.rich_text.map((v) => v.plain_text).join('') ?? '';
+      plainTexts += '\n';
     }
     if (isBlockTypeHeading3(v)) {
       numberListCounter = 0;
       items.push(
         <H3 key={`heading_3-${v.id}`} id={v.id} text={v.heading_3.rich_text} />,
       );
+      plainTexts +=
+        v.heading_3?.rich_text.map((v) => v.plain_text).join('') ?? '';
+      plainTexts += '\n';
     }
     if (isBlockTypeQuote(v)) {
       numberListCounter = 0;
       items.push(
         <Quote key={`quote-${v.id}`} id={v.id} text={v.quote.rich_text} />,
       );
+      plainTexts += v.quote?.rich_text.map((v) => v.plain_text).join('') ?? '';
+      plainTexts += '\n';
     }
     if (isBlockTypeBulletedListItem(v)) {
       numberListCounter = 0;
@@ -83,6 +105,9 @@ export async function Blocks({ blocks }: { blocks: Block[] }) {
           blocks={v.bulleted_list_item.children}
         />,
       );
+      plainTexts +=
+        v.bulleted_list_item?.rich_text.map((v) => v.plain_text).join('') ?? '';
+      plainTexts += '\n';
     }
     if (isBlockTypeNumberedListItem(v)) {
       numberListCounter += 1;
@@ -94,6 +119,9 @@ export async function Blocks({ blocks }: { blocks: Block[] }) {
           number={numberListCounter}
         />,
       );
+      plainTexts +=
+        v.numbered_list_item?.rich_text.map((v) => v.plain_text).join('') ?? '';
+      plainTexts += '\n';
     }
     if (isBlockTypeCode(v)) {
       numberListCounter = 0;
@@ -134,6 +162,8 @@ export async function Blocks({ blocks }: { blocks: Block[] }) {
           blocks={v.toggle.children}
         />,
       );
+      plainTexts += v.toggle?.rich_text.map((v) => v.plain_text).join('') ?? '';
+      plainTexts += '\n';
     }
     if (isBlockTypeCallout(v)) {
       numberListCounter = 0;
@@ -146,6 +176,9 @@ export async function Blocks({ blocks }: { blocks: Block[] }) {
           bgColor={v.callout.color}
         />,
       );
+      plainTexts +=
+        v.callout?.rich_text.map((v) => v.plain_text).join('') ?? '';
+      plainTexts += '\n';
     }
     if (isBlockTypeDivider(v)) {
       numberListCounter = 0;
@@ -172,6 +205,10 @@ export async function Blocks({ blocks }: { blocks: Block[] }) {
         />,
       );
     }
+  }
+
+  if (is_plain_texts) {
+    return plainTexts;
   }
 
   return items.map((v, i) => (

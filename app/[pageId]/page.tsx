@@ -71,6 +71,10 @@ export default async function Page({
   const blocks = await getBlock(pageId);
   const created_date = new Date(page.created_time).formattedDateTime();
   const edited_date = new Date(page.last_edited_time).formattedDateTime();
+  const plainTexts = (await Blocks({
+    blocks: blocks,
+    is_plain_texts: true,
+  })) as string;
 
   let coverUrl = '';
   let title: RichText[] = [];
@@ -146,6 +150,7 @@ export default async function Page({
             pageId={pageId}
             title={title.map((text) => text.plain_text ?? '').join('')}
             api_key={`${process.env.API_KEY}`}
+            body={plainTexts}
           />
         )}
 

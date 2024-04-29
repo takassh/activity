@@ -1,19 +1,22 @@
 'use client';
 import { ToolTipIconModal } from '@/app/ui/tool_tip_icon_modal';
 import { Button, HStack, Stack, Text } from '@chakra-ui/react';
-import { faEraser, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
+import { generateSummary } from '../api/action';
 import { WSResponse } from '../api/response';
 
 export function AdminComponent({
   pageId,
   title,
+  body,
   api_key,
 }: {
   pageId: string;
   title: string;
+  body: string;
   api_key: string;
 }) {
   let [isGenerating, setIsGenerating] = useState(false);
@@ -68,11 +71,20 @@ export function AdminComponent({
           </Button>
         </Stack>
       </ToolTipIconModal>
-      <ToolTipIconModal title="" icon={faEraser} fontSize={['md', 'xl']}>
+      <ToolTipIconModal title="" icon={faPencil} fontSize={['md', 'xl']}>
         <Stack>
-          <Text>Do you really want to purge cache?</Text>
-          <Button colorScheme="red" isDisabled>
-            Purge
+          <Text>Do you really want to generate summary?</Text>
+          <Button
+            onClick={async () => {
+              setIsGenerating(true);
+              await generateSummary(pageId, body);
+              setIsGenerating(false);
+              router.refresh();
+            }}
+            colorScheme="blue"
+            isLoading={isGenerating}
+          >
+            Generate
           </Button>
         </Stack>
       </ToolTipIconModal>
