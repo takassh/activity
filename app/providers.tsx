@@ -7,6 +7,7 @@ import {
   cookieStorageManager,
 } from '@chakra-ui/react';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { setCookie } from 'cookies-next';
 
 export function Providers({
@@ -32,6 +33,7 @@ export function Providers({
         type="cookie"
       />
       <Analytics />
+      <SpeedInsights />
       {children}
     </ChakraProvider>
   );
