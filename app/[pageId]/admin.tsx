@@ -22,7 +22,7 @@ export function AdminComponent({
   let [isGenerating, setIsGenerating] = useState(false);
   let router = useRouter();
   const { lastMessage, readyState, sendJsonMessage } = useWebSocket(
-    `wss://activity-takassh.shuttleapp.rs/ws`,
+    `wss://takassh.shuttleapp.rs/ws`,
   );
 
   useEffect(() => {
