@@ -1,9 +1,15 @@
 'use server';
 
+import { Metadata } from 'next';
 import { parse } from 'node-html-parser';
 import { Block } from '../types/block';
 import { Event } from '../types/event';
-import { Page } from '../types/notion_page';
+import { isFileTypeExternal, isFileTypeHosted } from '../types/file';
+import {
+  IsPagePropertyTypeRichText,
+  IsPagePropertyTypeTitle,
+  Page,
+} from '../types/notion_page';
 import {
   GetBlockResponse,
   GetEventsResponse,
@@ -146,5 +152,45 @@ export async function getOGP(url: string): Promise<OGPResponse> {
     description,
     imageSrc,
     favIconImage,
+  };
+}
+
+export async function getPagesMetadata(pageId: string): Promise<Metadata> {
+  const page = await getPage(pageId);
+
+  let title = '';
+  let summary = '';
+  let coverUrl = '';
+  if (IsPagePropertyTypeTitle(page.properties.title)) {
+    title = page.properties.title.title
+      .map((text) => text.plain_text ?? '')
+      .join('');
+  }
+  if (IsPagePropertyTypeRichText(page.properties.summary)) {
+    summary = page.properties.summary.rich_text
+      .map((text) => text.plain_text ?? '')
+      .join('');
+  }
+  if (isFileTypeExternal(page.cover)) {
+    coverUrl = page.cover.external.url;
+  }
+  if (isFileTypeHosted(page.cover)) {
+    coverUrl = page.cover.file.url;
+  }
+
+  return {
+    title: title,
+    description: summary,
+    openGraph: {
+      images: [
+        {
+          url: coverUrl,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary',
+      creator: '@octozuki',
+    },
   };
 }

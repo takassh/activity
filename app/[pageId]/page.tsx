@@ -1,5 +1,5 @@
 import { isLoggedInAdmin } from '@/app/api/auth';
-import { getBlock, getPage } from '@/app/api/data';
+import { getBlock, getPage, getPagesMetadata } from '@/app/api/data';
 import '@/app/extensions/date';
 import { isFileTypeExternal, isFileTypeHosted } from '@/app/types/file';
 import {
@@ -22,43 +22,8 @@ export async function generateMetadata(
   { params }: { params: { pageId: string } },
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const page = await getPage(params.pageId);
-
-  let title = '';
-  let summary = '';
-  let coverUrl = '';
-  if (IsPagePropertyTypeTitle(page.properties.title)) {
-    title = page.properties.title.title
-      .map((text) => text.plain_text ?? '')
-      .join('');
-  }
-  if (IsPagePropertyTypeRichText(page.properties.summary)) {
-    summary = page.properties.summary.rich_text
-      .map((text) => text.plain_text ?? '')
-      .join('');
-  }
-  if (isFileTypeExternal(page.cover)) {
-    coverUrl = page.cover.external.url;
-  }
-  if (isFileTypeHosted(page.cover)) {
-    coverUrl = page.cover.file.url;
-  }
-
-  return {
-    title: title,
-    description: summary,
-    openGraph: {
-      images: [
-        {
-          url: coverUrl,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary',
-      creator: '@octozuki',
-    },
-  };
+  const metadata = await getPagesMetadata(params.pageId);
+  return metadata;
 }
 
 export default async function Page({

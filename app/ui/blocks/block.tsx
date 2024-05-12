@@ -1,4 +1,4 @@
-import { getOGP } from '@/app/api/data';
+import { getPagesMetadata } from '@/app/api/data';
 import {
   Block,
   isBlockTypeBulletedListItem,
@@ -185,22 +185,25 @@ export async function Blocks({
       items.push(<CustomDivider key={`divider-${v.id}`} id={v.id} />);
     }
 
-    if (isBlockTypeLinkToPage(v)) {
+    if (isBlockTypeLinkToPage(v) && v.link_to_page.page_id) {
       numberListCounter = 0;
 
       const headersList = headers();
       const header_url = headersList.get('x-url') ?? '';
       const url = new URL(header_url);
       const href = `${url.protocol}//${url.host}/${v.link_to_page.page_id}`;
-      const ogp = await getOGP(href);
+      const metadata = await getPagesMetadata(v.link_to_page.page_id);
+      const image = (
+        metadata.openGraph?.images as Array<{ url: string | URL }>
+      )[0];
       items.push(
         <OGP
           key={`ogp-${v.id}`}
           host={url.hostname}
-          title={ogp.title}
-          summary={ogp.description}
-          imageUrl={ogp.imageSrc}
-          faviconUrl={ogp.favIconImage}
+          title={metadata.title as string}
+          summary={metadata.description ?? ''}
+          imageUrl={image.url as string}
+          faviconUrl={`${url.protocol}//${url.host}/favicon.ico`}
           href={href}
         />,
       );
