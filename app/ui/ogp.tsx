@@ -33,7 +33,7 @@ export function OGP({
             height="100%"
             justifyContent="space-between"
           >
-            <Text fontSize={['md', 'lg']} fontWeight="bold">
+            <Text fontSize={['md', 'lg']} fontWeight="bold" noOfLines={1}>
               {title}
             </Text>
             <Text fontSize={['sm', 'md']} fontWeight="normal" noOfLines={1}>
