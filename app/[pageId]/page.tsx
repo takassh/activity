@@ -27,8 +27,8 @@ export async function generateMetadata(
   let title = '';
   let summary = '';
   let coverUrl = '';
-  if (IsPagePropertyTypeTitle(page.properties.name)) {
-    title = page.properties.name.title
+  if (IsPagePropertyTypeTitle(page.properties.title)) {
+    title = page.properties.title.title
       .map((text) => text.plain_text ?? '')
       .join('');
   }
@@ -86,8 +86,8 @@ export default async function Page({
   if (isFileTypeHosted(page.cover)) {
     coverUrl = page.cover.file.url;
   }
-  if (IsPagePropertyTypeTitle(page.properties.name)) {
-    title = page.properties.name.title;
+  if (IsPagePropertyTypeTitle(page.properties.title)) {
+    title = page.properties.title.title;
   }
   if (IsPagePropertyTypeRichText(page.properties.summary)) {
     summary = page.properties.summary.rich_text;
@@ -107,19 +107,21 @@ export default async function Page({
         <Box py={4} />
         <Flex alignItems="baseline">
           <H1 key={`title`} text={title} id={'title'} />
-          <ToolTipIconModal
-            ml={8}
-            title="AIによる要約"
-            icon={faGhost}
-            fontSize={['md', 'xl']}
-          >
-            <Paragraph
-              id="summary"
-              text={summary}
-              fontSize={['sm', 'md']}
-              fontWeight="normal"
-            />
-          </ToolTipIconModal>
+          {page.properties.summary && (
+            <ToolTipIconModal
+              ml={8}
+              title="AIによる要約"
+              icon={faGhost}
+              fontSize={['md', 'xl']}
+            >
+              <Paragraph
+                id="summary"
+                text={summary}
+                fontSize={['sm', 'md']}
+                fontWeight="normal"
+              />
+            </ToolTipIconModal>
+          )}
         </Flex>
 
         <Stack spacing={0}>

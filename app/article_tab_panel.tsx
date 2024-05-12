@@ -45,8 +45,8 @@ export function ArticleTabPanel({
           if (isFileTypeHosted(page.cover)) {
             coverUrl = page.cover.file.url;
           }
-          if (IsPagePropertyTypeTitle(page.properties.name)) {
-            title = page.properties.name.title;
+          if (IsPagePropertyTypeTitle(page.properties.title)) {
+            title = page.properties.title.title;
           }
           if (IsPagePropertyTypeRichText(page.properties.summary)) {
             summary = page.properties.summary.rich_text;

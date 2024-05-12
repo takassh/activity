@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Image, Link, Spacer } from '@chakra-ui/react';
+import { Box, Flex, HStack, Image, Link, Spacer, Text } from '@chakra-ui/react';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { faChartLine, faX } from '@fortawesome/free-solid-svg-icons';
 import { cookies } from 'next/headers';
@@ -36,6 +36,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </Link>
                 <Link href="/monitor">
                   <RefIcon fontSize={['xl', '2xl']} icon={faChartLine} />
+                </Link>
+                <Link href="/74c5e456-0feb-4049-a217-ba6ad67869ca">
+                  <Text fontSize={['lg', 'xl']}>About</Text>
                 </Link>
               </HStack>
             </Flex>
