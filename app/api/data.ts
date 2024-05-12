@@ -33,7 +33,7 @@ export async function getPages(
 ): Promise<Page[]> {
   const response = await fetch(
     process.env.API_BASE_URI +
-    `/pages?page=${page}&limit=${limit}&category=${category}`,
+      `/pages?page=${page}&limit=${limit}&category=${category}`,
     { headers: { Authorization: process.env.API_KEY as string } },
   );
   const json = (await response.json()) as GetPagesResponse;
