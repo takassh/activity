@@ -15,7 +15,7 @@ export function BulletedListItem({
 }) {
   if (!IsBlocks(blocks)) {
     return (
-      <UnorderedList paddingX="2" paddingY={['0.5', '1']}>
+      <UnorderedList paddingX="2">
         <ListItem>
           <Paragraph
             id={id}
@@ -28,7 +28,7 @@ export function BulletedListItem({
     );
   } else {
     return (
-      <UnorderedList paddingX="2" paddingY={['0.5', '1']}>
+      <UnorderedList paddingX="2">
         <ListItem>
           <Paragraph
             id={id}
