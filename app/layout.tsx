@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <Image
                   borderRadius="full"
                   boxSize={['40px', '50px']}
-                  src="/home.png"
+                  src="/logo.png"
                   alt="Home"
                 />
               </Link>
