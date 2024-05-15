@@ -22,9 +22,7 @@ import {
 type Contents = Event | Page;
 
 export async function getPosts(): Promise<Contents[]> {
-  const response = await fetch(process.env.API_BASE_URI + '/posts', {
-    headers: { Authorization: process.env.API_KEY as string },
-  });
+  const response = await fetch(process.env.API_BASE_URI + '/posts', {});
   const json = (await response.json()) as GetPostsResponse;
   const posts = json.posts.map((post) => {
     return JSON.parse(post.contents);
@@ -52,7 +50,6 @@ export async function getPages(
 export async function getPage(pageId: string): Promise<Page> {
   const response = await fetch(process.env.API_BASE_URI + `/pages/${pageId}`, {
     next: { tags: [`page/${pageId}`] },
-    headers: { Authorization: process.env.API_KEY as string },
   });
   const json = (await response.json()) as GetPageResponse;
   const page = JSON.parse(json.page.contents);
@@ -60,9 +57,10 @@ export async function getPage(pageId: string): Promise<Page> {
 }
 
 export async function getBlock(pageId: string): Promise<Block[]> {
-  const response = await fetch(process.env.API_BASE_URI + `/blocks/${pageId}`, {
-    headers: { Authorization: process.env.API_KEY as string },
-  });
+  const response = await fetch(
+    process.env.API_BASE_URI + `/blocks/${pageId}`,
+    {},
+  );
   const json = (await response.json()) as GetBlockResponse;
   const page = JSON.parse(json.block.contents) as Block[];
   return page;

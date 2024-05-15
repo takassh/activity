@@ -11,6 +11,7 @@ import { Blocks } from '@/app/ui/blocks/block';
 import { H1 } from '@/app/ui/blocks/h1';
 import { Paragraph } from '@/app/ui/blocks/paragraph';
 import { ToolTipIconModal } from '@/app/ui/tool_tip_icon_modal';
+import { getSession } from '@auth0/nextjs-auth0';
 import { Box, Flex, Img, Stack, Text } from '@chakra-ui/react';
 import { faGhost } from '@fortawesome/free-solid-svg-icons';
 import { Metadata, ResolvingMetadata } from 'next';
@@ -32,6 +33,7 @@ export default async function Page({
   params: { pageId: string };
 }) {
   const isAdmin = await isLoggedInAdmin();
+  const session = await getSession();
   const page = await getPage(pageId);
   const blocks = await getBlock(pageId);
   const created_date = new Date(page.created_time).formattedDateTime();
@@ -116,7 +118,7 @@ export default async function Page({
           <AdminComponent
             pageId={pageId}
             title={title.map((text) => text.plain_text ?? '').join('')}
-            api_key={`${process.env.API_KEY}`}
+            token={`${session?.accessToken ?? ''}`}
             body={plainTexts}
           />
         )}

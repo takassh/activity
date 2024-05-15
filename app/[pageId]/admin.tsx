@@ -3,54 +3,22 @@ import { ToolTipIconModal } from '@/app/ui/tool_tip_icon_modal';
 import { Button, HStack, Stack, Text } from '@chakra-ui/react';
 import { faImage, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import useWebSocket, { ReadyState } from 'react-use-websocket';
-import { generateSummary } from '../api/action';
-import { WSResponse } from '../api/response';
+import { useState } from 'react';
+import { revalidate } from '../api/action';
 
 export function AdminComponent({
   pageId,
   title,
   body,
-  api_key,
+  token,
 }: {
   pageId: string;
   title: string;
   body: string;
-  api_key: string;
+  token: string;
 }) {
   let [isGenerating, setIsGenerating] = useState(false);
   let router = useRouter();
-  const { lastMessage, readyState, sendJsonMessage } = useWebSocket(
-    `wss://takassh.shuttleapp.rs/ws`,
-  );
-
-  useEffect(() => {
-    if (lastMessage?.data !== undefined) {
-      const wsResponse = JSON.parse(lastMessage?.data) as WSResponse;
-
-      if (
-        wsResponse.action === 'auth' &&
-        wsResponse.message === 'authenticated'
-      ) {
-        sendJsonMessage({
-          action: 'generate_cover_image',
-          id: pageId,
-          body: { prompt: `An attractive image for \"${title}\"` },
-        });
-        return;
-      }
-
-      if (
-        wsResponse.action === 'generate_cover_image' &&
-        wsResponse.message === 'success'
-      ) {
-        setIsGenerating(false);
-        router.refresh();
-        return;
-      }
-    }
-  }, [lastMessage, pageId, router, sendJsonMessage, title]);
 
   return (
     <HStack mt={4} spacing={4}>
@@ -59,12 +27,13 @@ export function AdminComponent({
           <Text>Do you really want to generate a cover image?</Text>
           <Button
             onClick={async () => {
-              if (readyState !== ReadyState.OPEN) return;
               setIsGenerating(true);
-              sendJsonMessage({ action: 'auth', api_key: api_key });
+              await generateCoverImage(token, pageId, title);
+              await revalidate(`page/${pageId}`);
+              setIsGenerating(false);
+              router.refresh();
             }}
             colorScheme="blue"
-            isDisabled={readyState !== ReadyState.OPEN}
             isLoading={isGenerating}
           >
             Generate
@@ -77,7 +46,8 @@ export function AdminComponent({
           <Button
             onClick={async () => {
               setIsGenerating(true);
-              await generateSummary(pageId, body);
+              await generateSummary(token, pageId, body);
+              await revalidate(`page/${pageId}`);
               setIsGenerating(false);
               router.refresh();
             }}
@@ -89,5 +59,46 @@ export function AdminComponent({
         </Stack>
       </ToolTipIconModal>
     </HStack>
+  );
+}
+
+async function generateSummary(
+  token: string,
+  pageId: string,
+  body: string,
+): Promise<void> {
+  await fetch(
+    process.env.NEXT_PUBLIC_API_BASE_URI + `/pages/${pageId}/generate-summary`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: body,
+      }),
+    },
+  );
+}
+
+async function generateCoverImage(
+  token: string,
+  pageId: string,
+  title: string,
+): Promise<void> {
+  await fetch(
+    process.env.NEXT_PUBLIC_API_BASE_URI +
+      `/pages/${pageId}/generate-cover-image`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt: `A cool image which represents \"${title}\"`,
+      }),
+    },
   );
 }

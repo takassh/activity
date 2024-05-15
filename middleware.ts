@@ -1,20 +1,6 @@
-import { NextResponse } from 'next/server';
-import { auth } from './auth';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$|.*\\.jpg$).*)'],
-};
-
-export default auth((request) => {
-  let { nextUrl } = request;
-
-  const isLoggedIn = !!request.auth?.user;
-
-  // login access when already logged in
-  if (isLoggedIn && nextUrl.pathname == '/login') {
-    return NextResponse.redirect(new URL('/', nextUrl));
-  }
-
+export function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-url', request.url);
 
@@ -23,4 +9,4 @@ export default auth((request) => {
       headers: requestHeaders,
     },
   });
-});
+}

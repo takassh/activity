@@ -1,6 +1,7 @@
 'use client';
 
 import { customTheme } from '@/theme';
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 import {
   ChakraProvider,
   ColorModeScript,
@@ -28,13 +29,15 @@ export function Providers({
 
   return (
     <ChakraProvider colorModeManager={cookieManager} theme={customTheme}>
-      <ColorModeScript
-        initialColorMode={customTheme.config.initialColorMode}
-        type="cookie"
-      />
-      <Analytics />
-      <SpeedInsights />
-      {children}
+      <UserProvider>
+        <ColorModeScript
+          initialColorMode={customTheme.config.initialColorMode}
+          type="cookie"
+        />
+        <Analytics />
+        <SpeedInsights />
+        {children}
+      </UserProvider>
     </ChakraProvider>
   );
 }
