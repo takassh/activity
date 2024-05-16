@@ -100,7 +100,7 @@ export default async function Page({
             textTransform="uppercase"
             style={{ fontVariantNumeric: 'tabular-nums' }}
           >
-            作成 {created_date}
+            created at {created_date}
           </Text>
           <Text
             color="gray.500"
@@ -110,7 +110,7 @@ export default async function Page({
             textTransform="uppercase"
             style={{ fontVariantNumeric: 'tabular-nums' }}
           >
-            編集 {edited_date}
+            edited at {edited_date}
           </Text>
         </Stack>
 
