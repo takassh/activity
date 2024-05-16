@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const session = await getSession();
-  if (session?.accessToken == null) {
+  if (
+    session?.accessToken == null ||
+    (session!.accessTokenExpiresAt ?? 0) < Date.now()
+  ) {
     return <Text>You need to login</Text>;
   }
   return <ChatBox token={session.accessToken} />;
