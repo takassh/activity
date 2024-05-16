@@ -10,6 +10,7 @@ export const revalidate = Number(process.env.REVALIDATE);
 
 export const metadata: Metadata = {
   title: 'Home',
+  icons: './favicon.ico',
 };
 
 export default async function Page() {
