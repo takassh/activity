@@ -19,7 +19,7 @@ export function Charts() {
   const color = useColorModeValue('#1A202C', '#F7FAFC');
   const titleFontSize = useBreakpointValue({ base: 20, sm: 30 });
   const { lastMessage, readyState } = useWebSocket(
-    `${process.env.NEXT_PUBLIC_WS_BASE_URI}top/receive`,
+    `${process.env.NEXT_PUBLIC_WS_BASE_URI}/top/receive`,
   );
 
   if (!(readyState === ReadyState.OPEN && isTop(lastMessage?.data))) {
