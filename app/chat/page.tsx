@@ -5,7 +5,7 @@ import ChatBox from './chat_box';
 
 export const metadata: Metadata = {
   title: 'Chat',
-  description: 'Chat with Takashi',
+  description: 'Chat with Takashi AI',
 };
 
 export default async function Page() {

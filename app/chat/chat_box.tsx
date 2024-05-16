@@ -28,17 +28,15 @@ export default function ChatBox(token: { token: string }) {
           direction="row"
           alignItems="baseline"
           rounded="md"
-          fontSize={['xs', 'sm']}
           width="full"
           padding={['2', '4']}
           bgColor={'notion_default'}
         >
           <Text as="span">📣</Text>
           <Box ml={[2, 4]}>
-            <Text fontSize={'lg'}>
-              Welcome! You can talk with my LLM here. Now it supports only
-              English. For example, you can ask &quot;Who are you?&quot; or
-              &quot;What type of concurrent programming do you know?&quot;
+            <Text fontSize={['sm', 'md']} whiteSpace="pre-line">
+              {`Welcome! You can talk with my LLM here. Now it supports only English.
+              E.g. "Who are you?" or "What technologies is this site using?"`}
             </Text>
           </Box>
         </Flex>

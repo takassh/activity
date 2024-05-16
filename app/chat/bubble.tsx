@@ -38,8 +38,8 @@ export function Bubble({ message, pages, isLLM, ...props }: BubbleProps) {
         <Icon as={FontAwesomeIcon} icon={faUser} fontSize={['30px', '40px']} />
       )}
       <Stack ml={4}>
-        <Text as="b">{isLLM ? 'Takashi' : 'You'}</Text>
-        <Text>{message}</Text>
+        <Text as="b">{isLLM ? 'Takashi AI' : 'You'}</Text>
+        <Text whiteSpace="pre-line">{message}</Text>
         {pages.length > 0 && (
           <Box>
             <Text mb={4}>Here are some related pages:</Text>
