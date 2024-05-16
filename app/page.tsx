@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const [all, rust, nextjs, flutter, golang, aws, web3, events] =
+  const [all, rust, nextjs, flutter, golang, aws, web3, ml, business, events] =
     await Promise.all([
       getPages(0, 20, ''),
       getPages(0, 20, 'rust'),
@@ -23,6 +23,8 @@ export default async function Page() {
       getPages(0, 20, 'golang'),
       getPages(0, 20, 'aws'),
       getPages(0, 20, 'web3'),
+      getPages(0, 20, 'ml'),
+      getPages(0, 20, 'business'),
       getEvents(0, 50),
     ]);
 
@@ -42,13 +44,25 @@ export default async function Page() {
           tabNames={[
             'ALL',
             'Rust',
+            'ML',
             'NextJs',
             'Flutter',
             'Golang',
             'AWS',
             'Web3',
+            'Business',
           ]}
-          initialPages={[all, rust, nextjs, flutter, golang, aws, web3]}
+          initialPages={[
+            all,
+            rust,
+            ml,
+            nextjs,
+            flutter,
+            golang,
+            aws,
+            web3,
+            business,
+          ]}
           maxW="700px"
         />
       </Suspense>
