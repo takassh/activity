@@ -12,7 +12,7 @@ export default async function Page() {
   const session = await getSession();
   if (
     session?.accessToken == null ||
-    (session!.accessTokenExpiresAt ?? 0) < Date.now()
+    (session!.accessTokenExpiresAt ?? 0) < Date.now() / 1000
   ) {
     return <Text>You need to login</Text>;
   }
