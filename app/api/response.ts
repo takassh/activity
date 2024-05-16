@@ -53,6 +53,24 @@ export type OGPResponse = {
   favIconImage: string;
 };
 
-export type SearchSSEResponse = {
-  response: string;
+export type SearchSSEResponse = SearchSSERMessage | SearchSSEPageIds;
+
+export type SearchSSERMessage = {
+  message: string;
 };
+
+export type SearchSSEPageIds = {
+  pages: string[];
+};
+
+export function isSearchSSERMessage(
+  response: SearchSSEResponse,
+): response is SearchSSERMessage {
+  return (response as SearchSSERMessage).message !== undefined;
+}
+
+export function isSearchSSEPages(
+  response: SearchSSEResponse,
+): response is SearchSSEPageIds {
+  return (response as SearchSSEPageIds).pages !== undefined;
+}

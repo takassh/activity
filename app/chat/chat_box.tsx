@@ -1,12 +1,19 @@
 'use client';
 import { Box, Flex, Input, Stack, Text } from '@chakra-ui/react';
 import { useState } from 'react';
-import { SearchSSEResponse } from '../api/response';
+import {
+  SearchSSERMessage,
+  SearchSSEResponse,
+  isSearchSSEPages,
+  isSearchSSERMessage,
+} from '../api/response';
+import { Page } from '../types/notion_page';
 import { Bubble } from './bubble';
 
 type Message = {
   role: 'user' | 'assistant';
   content: string;
+  pages: Page[];
 };
 
 export default function ChatBox(token: { token: string }) {
@@ -40,6 +47,7 @@ export default function ChatBox(token: { token: string }) {
           <Bubble
             key={index}
             message={message.content}
+            pages={message.pages}
             isLLM={message.role === 'assistant'}
             mt={4}
             mb={4}
@@ -51,20 +59,29 @@ export default function ChatBox(token: { token: string }) {
           action={() => {
             if (prompt == '') return;
             let newMessages = messages;
-            newMessages.push({ role: 'user', content: prompt });
+            newMessages.push({ role: 'user', content: prompt, pages: [] });
             setMessages(newMessages);
             setSending(true);
 
             new Promise(async () => {
               let responseMessage = '';
-              await search(token.token, prompt, messages, (response) => {
-                responseMessage += response.response;
-                setMessages([
-                  ...messages,
-                  { role: 'assistant', content: responseMessage },
-                ]);
+              const pages = await search(
+                token.token,
+                prompt,
+                messages,
+                (response) => {
+                  responseMessage += response.message;
+                  setMessages([
+                    ...messages,
+                    { role: 'assistant', content: responseMessage, pages: [] },
+                  ]);
+                },
+              );
+              newMessages.push({
+                role: 'assistant',
+                content: responseMessage,
+                pages: pages,
               });
-              newMessages.push({ role: 'assistant', content: responseMessage });
               setMessages(newMessages);
               setSending(false);
               setPrompt('');
@@ -90,8 +107,11 @@ async function search(
   token: string,
   prompt: string,
   history: Message[],
-  callback: (text: SearchSSEResponse) => void,
-): Promise<void> {
+  callback: (text: SearchSSERMessage) => void,
+): Promise<Page[]> {
+  let pageIds: string[] = [];
+  let result: Page[] = [];
+
   const response = await fetch(
     process.env.NEXT_PUBLIC_API_BASE_URI + '/search/sse',
     {
@@ -105,7 +125,7 @@ async function search(
   );
 
   const reader = response.body?.getReader();
-  if (!reader) return;
+  if (!reader) return result;
 
   let decoder = new TextDecoder();
   while (true) {
@@ -117,16 +137,32 @@ async function search(
       .split('data: ')
       .map((line) => line.trim())
       .filter((s) => s);
+
     for (const json of jsons) {
       try {
         if (json === '[DONE]') {
-          return;
+          return result;
         }
         const chunk = JSON.parse(json) as SearchSSEResponse;
-        callback(chunk);
+        if (isSearchSSEPages(chunk)) {
+          let pages = chunk.pages.map<Page>((page) => {
+            return JSON.parse(page);
+          });
+          pages.forEach((page) => {
+            if (!pageIds.includes(page.id)) {
+              pageIds.push(page.id);
+              result.push(page);
+            }
+          });
+        }
+        if (isSearchSSERMessage(chunk)) {
+          callback(chunk);
+        }
       } catch (error) {
         console.error(error);
       }
     }
   }
+
+  return result;
 }
