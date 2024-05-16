@@ -30,8 +30,8 @@ export default function ChatBox(token: { token: string }) {
           <Box ml={[2, 4]}>
             <Text fontSize={'lg'}>
               Welcome! You can talk with my LLM here. Now it supports only
-              English. For example, you can ask &quot;Who are you?&quot; or &quot;What type of
-              concurrent programming do you know?&quot;
+              English. For example, you can ask &quot;Who are you?&quot; or
+              &quot;What type of concurrent programming do you know?&quot;
             </Text>
           </Box>
         </Flex>
