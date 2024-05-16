@@ -1,6 +1,11 @@
-import { Box, Flex, HStack, Image, Link, Spacer, Text } from '@chakra-ui/react';
+import { Box, Flex, HStack, Image, Link, Spacer } from '@chakra-ui/react';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { faChartLine, faX } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChartLine,
+  faComment,
+  faInfo,
+  faX,
+} from '@fortawesome/free-solid-svg-icons';
 import { cookies } from 'next/headers';
 import { Providers } from './providers';
 import { Footer } from './ui/footer';
@@ -25,6 +30,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </Link>
               <Spacer />
               <HStack spacing={8}>
+                <Link href="/74c5e456-0feb-4049-a217-ba6ad67869ca">
+                  <RefIcon fontSize={['xl', '2xl']} icon={faInfo} />
+                </Link>
+                <Link href="/chat">
+                  <RefIcon fontSize={['xl', '2xl']} icon={faComment} />
+                </Link>
+                <Link href="/monitor">
+                  <RefIcon fontSize={['xl', '2xl']} icon={faChartLine} />
+                </Link>
                 <Link href="https://github.com/takassh">
                   <RefIcon fontSize={['xl', '2xl']} icon={faGithub} />
                 </Link>
@@ -33,12 +47,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </Link>
                 <Link href="https://www.linkedin.com/in/takashi-kasai-217a1722b/">
                   <RefIcon fontSize={['xl', '2xl']} icon={faLinkedin} />
-                </Link>
-                <Link href="/monitor">
-                  <RefIcon fontSize={['xl', '2xl']} icon={faChartLine} />
-                </Link>
-                <Link href="/74c5e456-0feb-4049-a217-ba6ad67869ca">
-                  <Text fontSize={['lg', 'xl']}>About</Text>
                 </Link>
               </HStack>
             </Flex>

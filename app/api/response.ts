@@ -53,7 +53,6 @@ export type OGPResponse = {
   favIconImage: string;
 };
 
-export type WSResponse = {
-  action: String;
-  message: String;
+export type SearchSSEResponse = {
+  response: string;
 };
