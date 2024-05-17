@@ -53,10 +53,17 @@ export type OGPResponse = {
   favIconImage: string;
 };
 
-export type SearchSSEResponse = SearchSSERMessage | SearchSSEPageIds;
+export type SearchSSEResponse =
+  | SearchSSERMessage
+  | SearchSSEPageIds
+  | SearchSSESession;
 
 export type SearchSSERMessage = {
   message: string;
+};
+
+export type SearchSSESession = {
+  session: string;
 };
 
 export type SearchSSEPageIds = {
@@ -73,4 +80,10 @@ export function isSearchSSEPages(
   response: SearchSSEResponse,
 ): response is SearchSSEPageIds {
   return (response as SearchSSEPageIds).pages !== undefined;
+}
+
+export function isSearchSSESession(
+  response: SearchSSEResponse,
+): response is SearchSSESession {
+  return (response as SearchSSESession).session !== undefined;
 }

@@ -6,6 +6,7 @@ import {
   SearchSSEResponse,
   isSearchSSEPages,
   isSearchSSERMessage,
+  isSearchSSESession,
 } from '../api/response';
 import { Page } from '../types/notion_page';
 import { Bubble } from './bubble';
@@ -20,6 +21,7 @@ export default function ChatBox(token: { token: string }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [prompt, setPrompt] = useState('');
   const [sending, setSending] = useState(false);
+  const [session, setSession] = useState<string>();
 
   return (
     <Box m={[4, 16]}>
@@ -63,7 +65,7 @@ export default function ChatBox(token: { token: string }) {
 
             new Promise(async () => {
               let responseMessage = '';
-              const pages = await search(
+              const [pages, returnSession] = await search(
                 token.token,
                 prompt,
                 messages,
@@ -74,6 +76,7 @@ export default function ChatBox(token: { token: string }) {
                     { role: 'assistant', content: responseMessage, pages: [] },
                   ]);
                 },
+                session,
               );
               newMessages.push({
                 role: 'assistant',
@@ -81,6 +84,7 @@ export default function ChatBox(token: { token: string }) {
                 pages: pages,
               });
               setMessages(newMessages);
+              setSession(returnSession);
               setSending(false);
               setPrompt('');
             });
@@ -106,9 +110,11 @@ async function search(
   prompt: string,
   history: Message[],
   callback: (text: SearchSSERMessage) => void,
-): Promise<Page[]> {
+  session?: string,
+): Promise<[Page[], string]> {
   let pageIds: string[] = [];
-  let result: Page[] = [];
+  let return_pages: Page[] = [];
+  let return_session = '';
 
   const response = await fetch(
     process.env.NEXT_PUBLIC_API_BASE_URI + '/search/sse',
@@ -118,12 +124,16 @@ async function search(
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ prompt: prompt, history: history }),
+      body: JSON.stringify({
+        prompt: prompt,
+        history: history,
+        session: session,
+      }),
     },
   );
 
   const reader = response.body?.getReader();
-  if (!reader) return result;
+  if (!reader) return [return_pages, return_session];
 
   let decoder = new TextDecoder();
   while (true) {
@@ -139,7 +149,7 @@ async function search(
     for (const json of jsons) {
       try {
         if (json === '[DONE]') {
-          return result;
+          return [return_pages, return_session];
         }
         const chunk = JSON.parse(json) as SearchSSEResponse;
         if (isSearchSSEPages(chunk)) {
@@ -149,12 +159,15 @@ async function search(
           pages.forEach((page) => {
             if (!pageIds.includes(page.id)) {
               pageIds.push(page.id);
-              result.push(page);
+              return_pages.push(page);
             }
           });
         }
         if (isSearchSSERMessage(chunk)) {
           callback(chunk);
+        }
+        if (isSearchSSESession(chunk)) {
+          return_session = chunk.session;
         }
       } catch (error) {
         console.error(error);
@@ -162,5 +175,5 @@ async function search(
     }
   }
 
-  return result;
+  return [return_pages, return_session];
 }
