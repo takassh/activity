@@ -26,7 +26,7 @@ export function Footer() {
             icon={colorMode == 'light' ? faMoon : faSun}
           />
         </Box>
-        <Text>Built with Meta Llama 3</Text>
+        <Text fontSize={['xs', 'md']}>Built with Meta Llama 3</Text>
       </HStack>
     </VStack>
   );
