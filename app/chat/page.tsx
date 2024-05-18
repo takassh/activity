@@ -8,11 +8,7 @@ export const metadata: Metadata = {
   description: 'Chat with Takashi AI',
   openGraph: {
     images: 'https://bucket.takassh.com/logo.png',
-  },
-  twitter: {
-    card: 'summary',
-    creator: '@octozuki',
-  },
+  }
 };
 
 export default async function Page() {
