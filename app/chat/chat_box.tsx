@@ -1,5 +1,5 @@
 'use client';
-import { Box, Flex, Input, Stack, Text } from '@chakra-ui/react';
+import { Box, BoxProps, Input, Stack } from '@chakra-ui/react';
 import { useState } from 'react';
 import {
   SearchSSERMessage,
@@ -11,50 +11,35 @@ import {
 import { Page } from '../types/notion_page';
 import { Bubble } from './bubble';
 
+interface ChatBoxProps extends BoxProps {
+  token: string;
+}
+
 type Message = {
   role: 'user' | 'assistant';
   content: string;
   pages: Page[];
 };
 
-export default function ChatBox(token: { token: string }) {
+export default function ChatBox({ token, ...props }: ChatBoxProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [prompt, setPrompt] = useState('');
   const [sending, setSending] = useState(false);
   const [session, setSession] = useState<string>();
 
   return (
-    <Box m={[4, 16]}>
-      <Stack>
-        <Flex
-          direction="row"
-          alignItems="baseline"
-          rounded="md"
-          width="full"
-          padding={['2', '4']}
-          bgColor={'notion_default'}
-        >
-          <Text as="span">📣</Text>
-          <Box ml={[2, 4]}>
-            <Text fontSize={['sm', 'md']} whiteSpace="pre-line">
-              {`Welcome! You can talk with my LLM here. Now it supports only English.
-              E.g. "Who are you?" or "What technologies is this site using?"`}
-            </Text>
-          </Box>
-        </Flex>
-
+    <Box {...props}>
+      <Stack spacing={[4, 8]}>
         {messages.map((message, index) => (
           <Bubble
             key={index}
             message={message.content}
             pages={message.pages}
             isLLM={message.role === 'assistant'}
-            mt={4}
-            mb={4}
           />
         ))}
       </Stack>
-      <Box position="sticky" bottom={4} zIndex={100} bg="bg" mt={16}>
+      <Box position="sticky" bottom={4} zIndex={100} bg="bg" mt={[4, 16]}>
         <form
           action={() => {
             if (prompt == '') return;
@@ -66,7 +51,7 @@ export default function ChatBox(token: { token: string }) {
             new Promise(async () => {
               let responseMessage = '';
               const [pages, returnSession] = await search(
-                token.token,
+                token,
                 prompt,
                 messages,
                 (response) => {
@@ -92,7 +77,7 @@ export default function ChatBox(token: { token: string }) {
         >
           <Input
             disabled={sending}
-            placeholder="Ask LLM anyhing"
+            placeholder="Ask Takashi AI whatever. What's on your mind?"
             noOfLines={5}
             value={prompt}
             onChange={(event) => {

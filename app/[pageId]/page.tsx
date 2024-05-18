@@ -11,7 +11,7 @@ import { Blocks } from '@/app/ui/blocks/block';
 import { H1 } from '@/app/ui/blocks/h1';
 import { Paragraph } from '@/app/ui/blocks/paragraph';
 import { ToolTipIconModal } from '@/app/ui/tool_tip_icon_modal';
-import { getAccessToken } from '@auth0/nextjs-auth0';
+import { getAccessToken, getSession } from '@auth0/nextjs-auth0';
 import { Box, Flex, Img, Stack, Text } from '@chakra-ui/react';
 import { faGhost } from '@fortawesome/free-solid-svg-icons';
 import { Metadata, ResolvingMetadata } from 'next';
@@ -33,7 +33,11 @@ export default async function Page({
   params: { pageId: string };
 }) {
   const isAdmin = await isLoggedInAdmin();
-  const token = await getAccessToken();
+  let accessToken = (await getSession())?.accessToken;
+  if (accessToken != null) {
+    accessToken = (await getAccessToken()).accessToken;
+  }
+
   const page = await getPage(pageId);
   const blocks = await getBlock(pageId);
   const created_date = new Date(page.created_time).formattedDateTime();
@@ -118,7 +122,7 @@ export default async function Page({
           <AdminComponent
             pageId={pageId}
             title={title.map((text) => text.plain_text ?? '').join('')}
-            token={`${token.accessToken ?? ''}`}
+            token={accessToken ?? ''}
             body={plainTexts}
           />
         )}

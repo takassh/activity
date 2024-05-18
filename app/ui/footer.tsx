@@ -19,13 +19,14 @@ export function Footer() {
       <Divider />
       <HStack>
         <Text fontSize={['xs', 'md']}>©︎ 2024 Takashi Kasai</Text>
-        <Box onClick={toggleColorMode} ml={2}>
+        <Box onClick={toggleColorMode} ml={2} mr={2}>
           <Icon
             fontSize={['sm', 'md']}
             as={FontAwesomeIcon}
             icon={colorMode == 'light' ? faMoon : faSun}
           />
         </Box>
+        <Text>Built with Meta Llama 3</Text>
       </HStack>
     </VStack>
   );

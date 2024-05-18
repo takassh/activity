@@ -74,12 +74,6 @@ export function Main({
             />
           );
         })}
-        {/* <form action={async () => {
-                        "use server";
-                        await signOut();
-                    }}>
-                        <button>logout</button>
-                    </form> */}
       </TabPanels>
     </Tabs>
   );
