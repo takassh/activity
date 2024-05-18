@@ -11,6 +11,9 @@ export const revalidate = Number(process.env.REVALIDATE);
 export const metadata: Metadata = {
   title: 'Home',
   icons: './favicon.ico',
+  openGraph: {
+    images: 'https://bucket.takassh.com/background.png',
+  },
 };
 
 export default async function Page() {
