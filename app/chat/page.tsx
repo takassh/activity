@@ -35,17 +35,19 @@ export default async function Page() {
         </Box>
       </Flex>
       {accessToken == null ? (
-        <Button colorScheme="blue">
-          <Link href="/api/auth/login?returnTo=/chat">
+        <Link href="/api/auth/login?returnTo=/chat">
+          <Button w="100%" colorScheme="blue">
             You need to log in to chat with him
-          </Link>
-        </Button>
+          </Button>
+        </Link>
       ) : (
         <>
           {accessToken && (
-            <Button size={['xs', 'sm']}>
-              <Link href="/api/auth/logout">Log out</Link>
-            </Button>
+            <Link href="/api/auth/logout">
+              <Button w="100%" size={['xs', 'sm']}>
+                Log out
+              </Button>
+            </Link>
           )}
           <ChatBox token={accessToken} mt={[4, 16]} />
         </>
