@@ -78,6 +78,7 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
           <Input
             disabled={sending}
             placeholder="Ask Takashi AI whatever. What's on your mind?"
+            fontSize={['xs', 'md']}
             noOfLines={5}
             value={prompt}
             onChange={(event) => {
