@@ -44,7 +44,7 @@ export type Block = {
   template?: TemplateValue;
   to_do?: ToDoValue;
   toggle?: ToggleValue;
-  video?: VideoValue;
+  video?: File;
   link_to_page?: Parent;
 };
 
@@ -224,7 +224,7 @@ export function isBlockTypeToggle(
 
 export function isBlockTypeVideo(
   block: Block,
-): block is Block & { video: VideoValue } {
+): block is Block & { video: File } {
   return block.video !== undefined;
 }
 
@@ -339,7 +339,7 @@ export type TableValue = {
 };
 
 export type TableRowsValue = {
-  cells?: RichText[];
+  cells: RichText[][];
 };
 
 export type TableOfContentsValue = {
@@ -362,10 +362,6 @@ export type ToggleValue = {
   rich_text: RichText[];
   color: TextColor;
   children?: Block[];
-};
-
-export type VideoValue = {
-  file_type: File;
 };
 
 export enum TextColor {

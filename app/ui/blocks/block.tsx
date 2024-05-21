@@ -13,7 +13,9 @@ import {
   isBlockTypeNumberedListItem,
   isBlockTypeParagraph,
   isBlockTypeQuote,
+  isBlockTypeTable,
   isBlockTypeToggle,
+  isBlockTypeVideo,
 } from '@/app/types/block';
 import { isFileTypeExternal, isFileTypeHosted } from '@/app/types/file';
 import { Box } from '@chakra-ui/react';
@@ -30,7 +32,9 @@ import { ImageBlock } from './image';
 import { NumberedListItem } from './numbered_list_item';
 import { Paragraph } from './paragraph';
 import { Quote } from './quote';
+import { TableBlock } from './table';
 import { ToggleBlock } from './toggle';
+import { VideoBlock } from './video';
 
 export async function Blocks({
   blocks,
@@ -152,6 +156,18 @@ export async function Blocks({
         );
       }
     }
+    if (isBlockTypeVideo(v)) {
+      numberListCounter = 0;
+      if (isFileTypeExternal(v.video)) {
+        items.push(
+          <VideoBlock
+            id={v.id}
+            key={`image-${v.id}`}
+            url={v.video.external.url}
+          />,
+        );
+      }
+    }
     if (isBlockTypeToggle(v)) {
       numberListCounter = 0;
       items.push(
@@ -184,7 +200,16 @@ export async function Blocks({
       numberListCounter = 0;
       items.push(<CustomDivider key={`divider-${v.id}`} id={v.id} />);
     }
-
+    if (isBlockTypeTable(v)) {
+      numberListCounter = 0;
+      items.push(
+        <TableBlock
+          key={`table-${v.id}`}
+          id={v.id}
+          blocks={v.table.children}
+        />,
+      );
+    }
     if (isBlockTypeLinkToPage(v) && v.link_to_page.page_id) {
       numberListCounter = 0;
 
