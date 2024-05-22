@@ -12,7 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const accessToken = (await getSession())?.accessToken;
+  const session = await getSession();
+  let accessToken = '';
+  if (session) {
+    accessToken = session.accessToken ?? '';
+  }
 
   return (
     <Stack m={[4, 16]}>
