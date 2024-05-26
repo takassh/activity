@@ -38,7 +38,7 @@ export default async function Page() {
           </Text>
         </Box>
       </Flex>
-      {accessToken == null ? (
+      {accessToken == '' ? (
         <Link href="/api/auth/login?returnTo=/chat">
           <Button w="100%" colorScheme="blue">
             You need to log in to chat with him
