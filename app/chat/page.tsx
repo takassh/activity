@@ -1,4 +1,4 @@
-import { getSession } from '@auth0/nextjs-auth0';
+import { getAccessToken, getSession } from '@auth0/nextjs-auth0';
 import { Box, Button, Flex, Link, Stack, Text } from '@chakra-ui/react';
 import { Metadata } from 'next';
 import ChatBox from './chat_box';
@@ -15,7 +15,7 @@ export default async function Page() {
   const session = await getSession();
   let accessToken = '';
   if (session) {
-    accessToken = session.accessToken ?? '';
+    accessToken = (await getAccessToken()).accessToken ?? '';
   }
 
   return (
