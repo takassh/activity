@@ -19,6 +19,17 @@ export async function evaluate(code: string): Promise<ExecuteResponse> {
   return res.json();
 }
 
+export async function nudge(page_id: string, content: string): Promise<void> {
+  await fetch(process.env.API_BASE_URI + `/nudge`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      page_id: page_id,
+      content: content,
+    }),
+  });
+}
+
 export async function revalidate(tag: string) {
   await revalidateTag(tag);
 }

@@ -27,7 +27,15 @@ export function ToolTipIconModal({
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <ToolTipIcon {...props} onClick={onOpen} tooltip={title} />
+      <ToolTipIcon
+        {...props}
+        onClick={(event) => {
+          event.stopPropagation();
+          event.preventDefault();
+          onOpen();
+        }}
+        tooltip={title}
+      />
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
         <ModalContent>

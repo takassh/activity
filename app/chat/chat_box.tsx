@@ -1,5 +1,6 @@
 'use client';
-import { Box, BoxProps, Input, Stack } from '@chakra-ui/react';
+import { Box, BoxProps, FormControl, Input, Stack } from '@chakra-ui/react';
+import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import {
   SearchSSERMessage,
@@ -40,9 +41,10 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
         ))}
       </Stack>
       <Box position="sticky" bottom={4} zIndex={100} bg="bg" mt={[4, 16]}>
-        <form
-          action={() => {
-            if (prompt == '') return;
+        <Formik
+          initialValues={{ prompt: '' }}
+          onSubmit={async (values, actions) => {
+            const prompt = values.prompt;
             let newMessages = messages;
             newMessages.push({ role: 'user', content: prompt, pages: [] });
             setMessages(newMessages);
@@ -71,21 +73,42 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
               setMessages(newMessages);
               setSession(returnSession);
               setSending(false);
-              setPrompt('');
+              values.prompt = '';
             });
           }}
         >
-          <Input
-            disabled={sending}
-            placeholder="Ask Takashi AI whatever. What's on your mind?"
-            fontSize={['xs', 'md']}
-            noOfLines={5}
-            value={prompt}
-            onChange={(event) => {
-              setPrompt(event.target.value);
-            }}
-          />
-        </form>
+          {(props) => (
+            <Form>
+              <Field
+                name="prompt"
+                validate={(value: string) => {
+                  if (
+                    value.replaceAll(RegExp(' +', 'g'), ' ').split(' ').length <
+                    3
+                  ) {
+                    return 'Please enter a longer prompt';
+                  }
+                }}
+              >
+                {({ field, form }: FieldProps<string>) => {
+                  return (
+                    <FormControl>
+                      <Input
+                        disabled={sending}
+                        placeholder="Ask Takashi AI whatever. What's on your mind?"
+                        fontSize={['xs', 'md']}
+                        noOfLines={5}
+                        {...field}
+                        mb={2}
+                      />
+                      <ErrorMessage name="prompt" />
+                    </FormControl>
+                  );
+                }}
+              </Field>
+            </Form>
+          )}
+        </Formik>
       </Box>
     </Box>
   );

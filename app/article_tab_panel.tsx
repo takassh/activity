@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { getPages } from './api/data';
 import { isFileTypeExternal, isFileTypeHosted } from './types/file';
 import {
+  IsPagePropertyTypeCheckBox,
   IsPagePropertyTypeMultiSelect,
   IsPagePropertyTypeRichText,
   IsPagePropertyTypeTitle,
@@ -38,6 +39,7 @@ export function ArticleTabPanel({
           let title: RichText[] = [];
           let summary: RichText[] = [];
           let tags: string[] = [];
+          let draft = false;
 
           if (isFileTypeExternal(page.cover)) {
             coverUrl = page.cover.external.url;
@@ -54,6 +56,9 @@ export function ArticleTabPanel({
           if (IsPagePropertyTypeMultiSelect(page.properties.tags)) {
             tags = page.properties.tags.multi_select.map((tag) => tag.name!);
           }
+          if (IsPagePropertyTypeCheckBox(page.properties.draft)) {
+            draft = page.properties.draft.checkbox;
+          }
 
           return (
             <Box key={`page-${page.id}`} py={2}>
@@ -66,6 +71,7 @@ export function ArticleTabPanel({
                 tags={tags}
                 readTime={''}
                 createdAt={page.created_time}
+                draft={draft}
               />
             </Box>
           );
