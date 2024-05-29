@@ -165,9 +165,12 @@ export async function getPagesMetadata(pageId: string): Promise<Metadata> {
       .join('');
   }
   if (IsPagePropertyTypeRichText(page.properties.summary)) {
-    summary = page.properties.summary.rich_text
-      .map((text) => text.plain_text ?? '')
-      .join('');
+    summary = 'still in progress 🚧';
+    if (page.properties.summary.rich_text.length > 0) {
+      summary = page.properties.summary.rich_text
+        .map((text) => text.plain_text ?? '')
+        .join('');
+    }
   }
   if (isFileTypeExternal(page.cover)) {
     coverUrl = page.cover.external.url;
