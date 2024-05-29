@@ -121,6 +121,7 @@ export async function Blocks({
           id={v.id}
           text={v.numbered_list_item.rich_text}
           number={numberListCounter}
+          blocks={v.numbered_list_item.children}
         />,
       );
       plainTexts +=
