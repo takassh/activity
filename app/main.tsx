@@ -11,8 +11,6 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ArticleTabPanel } from './article_tab_panel';
 import { Page } from './types/notion_page';
 
-const tabs = ['all', 'rust', 'nextjs', 'flutter', 'golang', 'aws', 'web3'];
-
 export interface MainProps extends Omit<TabsProps, 'children'> {
   tabNames: string[];
   categories: string[];
@@ -31,7 +29,7 @@ export function Main({
   const selectedTab = searchParams.get('tab');
   let initialTab = 0;
   if (selectedTab) {
-    const index = tabs.indexOf(selectedTab);
+    const index = tabNames.indexOf(selectedTab);
     if (index >= 0) {
       initialTab = index;
     }
@@ -40,7 +38,7 @@ export function Main({
   return (
     <Tabs
       onChange={(idx) => {
-        router.push(`${pathname}?tab=${tabs[idx]}`);
+        router.push(`${pathname}?tab=${tabNames[idx].toLowerCase()}`);
       }}
       isFitted
       defaultIndex={initialTab}

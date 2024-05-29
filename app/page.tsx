@@ -38,11 +38,13 @@ export default async function Page() {
           categories={[
             '',
             'rust',
+            'ml',
             'nextjs',
             'flutter',
             'golang',
             'aws',
             'web3',
+            'business',
           ]}
           tabNames={[
             'ALL',
