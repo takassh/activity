@@ -15,6 +15,7 @@ import { getAccessToken, getSession } from '@auth0/nextjs-auth0';
 import { Box, Flex, Img, Stack, Text } from '@chakra-ui/react';
 import { faGhost } from '@fortawesome/free-solid-svg-icons';
 import { Metadata, ResolvingMetadata } from 'next';
+import Nudge from '../ui/nudge';
 import { AdminComponent } from './admin';
 
 export const revalidate = Number(process.env.REVALIDATE);
@@ -118,17 +119,26 @@ export default async function Page({
           </Text>
         </Stack>
 
-        {isAdmin && (
+        {isAdmin ? (
           <AdminComponent
             pageId={pageId}
             title={title.map((text) => text.plain_text ?? '').join('')}
             token={accessToken ?? ''}
             body={plainTexts}
           />
+        ) : (
+          <Text mt={[4, 8]} mb={[4, 8]} fontSize={['sm', 'lg']}>
+            Still in draft form, but you can hurry me up →
+            <Nudge pageId={pageId} />
+          </Text>
         )}
 
-        <Box pt={8} />
-        <Blocks blocks={blocks} />
+        {(summary.length > 0 || isAdmin) && (
+          <>
+            <Box pt={8} />
+            <Blocks blocks={blocks} />
+          </>
+        )}
       </Box>
     </Flex>
   );
