@@ -119,25 +119,25 @@ export default async function Page({
           </Text>
         </Stack>
 
-        {isAdmin ? (
+        {isAdmin && (
           <AdminComponent
             pageId={pageId}
             title={title.map((text) => text.plain_text ?? '').join('')}
             token={accessToken ?? ''}
             body={plainTexts}
           />
+        )}
+
+        {(summary.length > 0 || isAdmin) ? (
+          <>
+            <Box pt={8} />
+            <Blocks blocks={blocks} />
+          </>
         ) : (
           <Text mt={[4, 8]} mb={[4, 8]} fontSize={['sm', 'lg']}>
             Still in draft form, but you can hurry me up →
             <Nudge pageId={pageId} />
           </Text>
-        )}
-
-        {(summary.length > 0 || isAdmin) && (
-          <>
-            <Box pt={8} />
-            <Blocks blocks={blocks} />
-          </>
         )}
       </Box>
     </Flex>
