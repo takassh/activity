@@ -128,7 +128,7 @@ export default async function Page({
           />
         )}
 
-        {(summary.length > 0 || isAdmin) ? (
+        {summary.length > 0 || isAdmin ? (
           <>
             <Box pt={8} />
             <Blocks blocks={blocks} />
