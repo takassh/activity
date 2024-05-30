@@ -162,10 +162,7 @@ async function search(
         }
         const chunk = JSON.parse(json) as SearchSSEResponse;
         if (isSearchSSEPages(chunk)) {
-          let pages = chunk.pages.map<Page>((page) => {
-            return JSON.parse(page);
-          });
-          pages.forEach((page) => {
+          chunk.pages.forEach((page) => {
             if (!pageIds.includes(page.id)) {
               pageIds.push(page.id);
               return_pages.push(page);

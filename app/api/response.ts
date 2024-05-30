@@ -1,3 +1,5 @@
+import { Page as NotionPage } from '@/app/types/notion_page';
+
 export type GetPostsResponse = {
   posts: Post[];
 };
@@ -55,7 +57,7 @@ export type OGPResponse = {
 
 export type SearchSSEResponse =
   | SearchSSERMessage
-  | SearchSSEPageIds
+  | SearchSSEPages
   | SearchSSESession;
 
 export type SearchSSERMessage = {
@@ -66,8 +68,8 @@ export type SearchSSESession = {
   session: string;
 };
 
-export type SearchSSEPageIds = {
-  pages: string[];
+export type SearchSSEPages = {
+  pages: NotionPage[];
 };
 
 export function isSearchSSERMessage(
@@ -78,8 +80,8 @@ export function isSearchSSERMessage(
 
 export function isSearchSSEPages(
   response: SearchSSEResponse,
-): response is SearchSSEPageIds {
-  return (response as SearchSSEPageIds).pages !== undefined;
+): response is SearchSSEPages {
+  return (response as SearchSSEPages).pages !== undefined;
 }
 
 export function isSearchSSESession(
