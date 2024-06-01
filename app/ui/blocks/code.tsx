@@ -46,6 +46,8 @@ export function CodeBlock({
         {text}
       </Mermaid>
     );
+  } else if (language == 'plain text') {
+    codeBlock = <code>{text}</code>;
   } else {
     const highlightedCode = hljs.highlight(text, { language: language }).value;
     if (colorMode == 'light') {
