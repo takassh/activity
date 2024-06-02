@@ -35,7 +35,7 @@ export default async function Page({
 }) {
   const isAdmin = await isLoggedInAdmin();
   let accessToken = (await getSession())?.accessToken;
-  if (accessToken != null) {
+  if (accessToken != null && isAdmin) {
     accessToken = (await getAccessToken()).accessToken;
   }
 

@@ -31,7 +31,7 @@ export function Bubble({ message, pages, isLLM, ...props }: BubbleProps) {
         <Image
           borderRadius="full"
           boxSize={['30px', '40px']}
-          src="/logo-circle.png"
+          src="/logo-circle.webp"
           alt="Home"
         />
       ) : (
