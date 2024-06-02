@@ -14,9 +14,6 @@ export function VideoBlock({ id, url }: { id: string; url: string }) {
           aspectRatio: '16/9',
         }}
       />
-      {/* <Box id={id} maxWidth="full">
-        <Video rounded="lg" src={url} alt="image" />
-      </Box> */}
     </Center>
   );
 }
