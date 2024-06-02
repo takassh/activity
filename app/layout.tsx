@@ -24,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <Image
                   borderRadius="full"
                   boxSize={['40px', '50px']}
-                  src="/logo-circle.webp"
+                  src="/logo-circle-small.webp"
                   alt="Home"
                 />
               </Link>
