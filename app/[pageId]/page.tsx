@@ -75,6 +75,7 @@ export default async function Page({
           objectFit="cover"
           height={['200', '300']}
           width="100%"
+          alt='cover image'
         />
         <Box py={4} />
         <Flex alignItems="baseline">
