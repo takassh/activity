@@ -81,7 +81,7 @@ export function CodeBlock({
               size={['xs']}
               icon={<RefIcon icon={faPlay} />}
               onClick={execute}
-              aria-label={''}
+              aria-label={'play'}
             />
           )}
           <Tag size={['sm', 'md']} textTransform="uppercase">
