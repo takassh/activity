@@ -97,7 +97,7 @@ async function generateCoverImage(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        prompt: `A cool image which represents \"${title}\"`,
+        prompt: `A cool cover image which represents a concept of \"${title}\"`,
       }),
     },
   );
