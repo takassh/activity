@@ -30,22 +30,34 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </Link>
               <Spacer />
               <HStack spacing={8}>
-                <Link href="/74c5e456-0feb-4049-a217-ba6ad67869ca" aria-label='Go to about page'>
+                <Link
+                  href="/74c5e456-0feb-4049-a217-ba6ad67869ca"
+                  aria-label="Go to about page"
+                >
                   <RefIcon fontSize={['xl', '2xl']} icon={faInfo} />
                 </Link>
-                <Link href="/chat" aria-label='Go to chat page'>
+                <Link href="/chat" aria-label="Go to chat page">
                   <RefIcon fontSize={['xl', '2xl']} icon={faComment} />
                 </Link>
-                <Link href="/monitor" aria-label='Go to monitor page'>
+                <Link href="/monitor" aria-label="Go to monitor page">
                   <RefIcon fontSize={['xl', '2xl']} icon={faChartLine} />
                 </Link>
-                <Link href="https://github.com/takassh" aria-label='Go to Github'>
+                <Link
+                  href="https://github.com/takassh"
+                  aria-label="Go to Github"
+                >
                   <RefIcon fontSize={['xl', '2xl']} icon={faGithub} />
                 </Link>
-                <Link href="https://twitter.com/octozuki" aria-label='Go to Twitter'>
+                <Link
+                  href="https://twitter.com/octozuki"
+                  aria-label="Go to Twitter"
+                >
                   <RefIcon fontSize={['xl', '2xl']} icon={faX} />
                 </Link>
-                <Link href="https://www.linkedin.com/in/takashi-kasai-217a1722b/" aria-label='Go to Linkedin'>
+                <Link
+                  href="https://www.linkedin.com/in/takashi-kasai-217a1722b/"
+                  aria-label="Go to Linkedin"
+                >
                   <RefIcon fontSize={['xl', '2xl']} icon={faLinkedin} />
                 </Link>
               </HStack>

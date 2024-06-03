@@ -75,7 +75,7 @@ export default async function Page({
           objectFit="cover"
           height={['200', '300']}
           width="100%"
-          alt='cover image'
+          alt="cover image"
         />
         <Box py={4} />
         <Flex alignItems="baseline">
@@ -129,7 +129,9 @@ export default async function Page({
           />
         )}
 
-        {summary.length > 0 || isAdmin ? (
+        {page.properties.summary == undefined ||
+        summary.length > 0 ||
+        isAdmin ? (
           <>
             <Box pt={8} />
             <Blocks blocks={blocks} />

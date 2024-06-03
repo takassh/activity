@@ -1,11 +1,11 @@
 import '@/app/extensions/date';
-import { Flex, Show, Stack } from '@chakra-ui/react';
+import { Flex, Stack } from '@chakra-ui/react';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { getEvents, getPages } from './api/data';
 import { Main } from './main';
 import { RecentActivity } from './recent_activity';
-import styles from './recent_activity.module.css'
+import styles from './recent_activity.module.css';
 
 export const revalidate = Number(process.env.REVALIDATE);
 
@@ -80,4 +80,3 @@ export default async function Page() {
     </Flex>
   );
 }
-
