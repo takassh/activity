@@ -5,6 +5,7 @@ import { Suspense } from 'react';
 import { getEvents, getPages } from './api/data';
 import { Main } from './main';
 import { RecentActivity } from './recent_activity';
+import styles from './recent_activity.module.css'
 
 export const revalidate = Number(process.env.REVALIDATE);
 
@@ -71,11 +72,12 @@ export default async function Page() {
           maxW="700px"
         />
       </Suspense>
-      <Show above="sm">
+      <div className={styles.show_md}>
         <Stack direction="row">
           <RecentActivity initialEvents={events} mx={16} maxW="500px" />
         </Stack>
-      </Show>
+      </div>
     </Flex>
   );
 }
+
