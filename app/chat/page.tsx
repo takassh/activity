@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Chat',
   description: 'Chat with Takashi AI',
   openGraph: {
-    images: 'https://bucket.takassh.com/logo.avif',
+    images: 'https://bucket.takassh.com/logo.jpg',
   },
 };
 
