@@ -56,7 +56,7 @@ export function Bubble({
               icon={faBug}
               fontSize={'md'}
             >
-              <Text>{debug}</Text>
+              <Text whiteSpace="pre-line">{debug}</Text>
             </ToolTipIconModal>
           )}
         </HStack>

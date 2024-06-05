@@ -35,7 +35,7 @@ export default async function Page() {
             You can talk with my LLM, takashi AI. Now he can understand only English.
             I've fed him blog posts from this site.
             Also you can see what context he's using to answer your questions. 
-            Prompt example: "Who are you?" or "What technologies is this site using?"`}
+            Prompt example: "What articles does this site have?" or "What technologies is this site using?"`}
           </Text>
         </Box>
       </Flex>
