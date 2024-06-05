@@ -83,7 +83,7 @@ export default async function Page({
           {page.properties.summary && (
             <ToolTipIconModal
               ml={8}
-              title="AIによる要約"
+              title="Summarized by AI"
               icon={faGhost}
               fontSize={['md', 'xl']}
             >

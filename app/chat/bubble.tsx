@@ -49,9 +49,10 @@ export function Bubble({
       <Stack ml={4} width="100%">
         <HStack>
           <Text as="b">{isLLM ? 'Takashi AI' : 'You'}</Text>
-          {isLLM && (
+          {isLLM && debug && debug.trim() != "" && (
             <ToolTipIconModal
               title="Given context"
+              ml={2}
               icon={faBug}
               fontSize={'md'}
             >
