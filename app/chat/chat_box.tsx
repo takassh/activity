@@ -3,8 +3,10 @@ import { Box, BoxProps, FormControl, Input, Stack } from '@chakra-ui/react';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import {
+  Debug,
   SearchSSERMessage,
   SearchSSEResponse,
+  isSearchSSEDebug,
   isSearchSSEPages,
   isSearchSSERMessage,
   isSearchSSESession,
@@ -24,9 +26,9 @@ type Message = {
 
 export default function ChatBox({ token, ...props }: ChatBoxProps) {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [prompt, setPrompt] = useState('');
   const [sending, setSending] = useState(false);
   const [session, setSession] = useState<string>();
+  const [debugs, setDebugs] = useState<string[]>([]);
 
   return (
     <Box {...props}>
@@ -36,6 +38,9 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
             key={index}
             message={message.content}
             pages={message.pages}
+            debug={
+              message.role === 'assistant' ? debugs[(index - 1) / 2] : undefined
+            }
             isLLM={message.role === 'assistant'}
           />
         ))}
@@ -52,7 +57,7 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
 
             new Promise(async () => {
               let responseMessage = '';
-              const [pages, returnSession] = await search(
+              const [pages, returnSession, returnDebug] = await search(
                 token,
                 prompt,
                 messages,
@@ -72,6 +77,7 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
               });
               setMessages(newMessages);
               setSession(returnSession);
+              setDebugs([...debugs, returnDebug?.context ?? '']);
               setSending(false);
               values.prompt = '';
             });
@@ -120,10 +126,11 @@ async function search(
   history: Message[],
   callback: (text: SearchSSERMessage) => void,
   session?: string,
-): Promise<[Page[], string]> {
+): Promise<[Page[], string, Debug?]> {
   let pageIds: string[] = [];
   let return_pages: Page[] = [];
   let return_session = '';
+  let return_debug = undefined;
 
   const response = await fetch(
     process.env.NEXT_PUBLIC_API_BASE_URI + '/search/sse',
@@ -142,7 +149,7 @@ async function search(
   );
 
   const reader = response.body?.getReader();
-  if (!reader) return [return_pages, return_session];
+  if (!reader) return [return_pages, return_session, return_debug];
 
   let decoder = new TextDecoder();
   while (true) {
@@ -158,7 +165,7 @@ async function search(
     for (const json of jsons) {
       try {
         if (json === '[DONE]') {
-          return [return_pages, return_session];
+          return [return_pages, return_session, return_debug];
         }
         const chunk = JSON.parse(json) as SearchSSEResponse;
         if (isSearchSSEPages(chunk)) {
@@ -175,11 +182,14 @@ async function search(
         if (isSearchSSESession(chunk)) {
           return_session = chunk.session;
         }
+        if (isSearchSSEDebug(chunk)) {
+          return_debug = chunk.debug;
+        }
       } catch (error) {
         console.error(error);
       }
     }
   }
 
-  return [return_pages, return_session];
+  return [return_pages, return_session, return_debug];
 }

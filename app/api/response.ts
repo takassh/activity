@@ -58,7 +58,8 @@ export type OGPResponse = {
 export type SearchSSEResponse =
   | SearchSSERMessage
   | SearchSSEPages
-  | SearchSSESession;
+  | SearchSSESession
+  | SearchSSEDebug;
 
 export type SearchSSERMessage = {
   message: string;
@@ -70,6 +71,14 @@ export type SearchSSESession = {
 
 export type SearchSSEPages = {
   pages: NotionPage[];
+};
+
+export type SearchSSEDebug = {
+  debug: Debug;
+};
+
+export type Debug = {
+  context: string;
 };
 
 export function isSearchSSERMessage(
@@ -88,4 +97,10 @@ export function isSearchSSESession(
   response: SearchSSEResponse,
 ): response is SearchSSESession {
   return (response as SearchSSESession).session !== undefined;
+}
+
+export function isSearchSSEDebug(
+  response: SearchSSEResponse,
+): response is SearchSSEDebug {
+  return (response as SearchSSEDebug).debug !== undefined;
 }
