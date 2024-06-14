@@ -50,7 +50,8 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
           initialValues={{ prompt: '' }}
           onSubmit={async (values, actions) => {
             const prompt = values.prompt;
-            let newMessages = messages;
+            const history = [...messages];
+            let newMessages = [...messages];
             newMessages.push({ role: 'user', content: prompt, pages: [] });
             setMessages(newMessages);
             setSending(true);
@@ -60,11 +61,11 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
               const [pages, returnSession, returnDebug] = await search(
                 token,
                 prompt,
-                messages,
+                history,
                 (response) => {
                   responseMessage += response.message;
                   setMessages([
-                    ...messages,
+                    ...newMessages,
                     { role: 'assistant', content: responseMessage, pages: [] },
                   ]);
                 },

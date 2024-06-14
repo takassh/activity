@@ -63,7 +63,9 @@ export function Bubble({
         <Text whiteSpace="pre-line">{message}</Text>
         {pages.length > 0 && (
           <Box>
-            <Text mb={4}>Takashi AI referenced these pages:</Text>
+            <Text my={4} fontWeight="bold">
+              You may like:
+            </Text>
             <Stack>
               {pages.map((page, i) => {
                 let coverUrl = '';
