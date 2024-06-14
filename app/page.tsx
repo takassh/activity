@@ -18,16 +18,15 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const [all, rust, nextjs, flutter, golang, aws, web3, ml, business, events] =
+  const [all, language, ml, infra, backend, frontend, web3, business, events] =
     await Promise.all([
       getPages(0, 20, ''),
-      getPages(0, 20, 'rust'),
-      getPages(0, 20, 'nextjs'),
-      getPages(0, 20, 'flutter'),
-      getPages(0, 20, 'golang'),
-      getPages(0, 20, 'aws'),
-      getPages(0, 20, 'web3'),
+      getPages(0, 20, 'language'),
       getPages(0, 20, 'ml'),
+      getPages(0, 20, 'infra'),
+      getPages(0, 20, 'backend'),
+      getPages(0, 20, 'frontend'),
+      getPages(0, 20, 'web3'),
       getPages(0, 20, 'business'),
       getEvents(0, 50),
     ]);
@@ -38,34 +37,31 @@ export default async function Page() {
         <Main
           categories={[
             '',
-            'rust',
+            'language',
             'ml',
-            'nextjs',
-            'flutter',
-            'golang',
-            'aws',
+            'infra',
+            'backend',
+            'frontend',
             'web3',
             'business',
           ]}
           tabNames={[
             'ALL',
-            'Rust',
+            'Language',
             'ML',
-            'NextJs',
-            'Flutter',
-            'Golang',
-            'AWS',
+            'Infra',
+            'Backend',
+            'Frontend',
             'Web3',
             'Business',
           ]}
           initialPages={[
             all,
-            rust,
+            language,
             ml,
-            nextjs,
-            flutter,
-            golang,
-            aws,
+            infra,
+            backend,
+            frontend,
             web3,
             business,
           ]}
