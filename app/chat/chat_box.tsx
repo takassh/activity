@@ -19,7 +19,7 @@ interface ChatBoxProps extends BoxProps {
 }
 
 type Message = {
-  role: 'user' | 'assistant';
+  role: 'system' | 'user' | 'assistant';
   content: string;
   pages: Page[];
 };
@@ -33,17 +33,21 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
   return (
     <Box {...props}>
       <Stack spacing={[4, 8]}>
-        {messages.map((message, index) => (
-          <Bubble
-            key={index}
-            message={message.content}
-            pages={message.pages}
-            debug={
-              message.role === 'assistant' ? debugs[(index - 1) / 2] : undefined
-            }
-            isLLM={message.role === 'assistant'}
-          />
-        ))}
+        {messages
+          .filter((v) => v.role != 'system')
+          .map((message, index) => (
+            <Bubble
+              key={index}
+              message={message.content}
+              pages={message.pages}
+              debug={
+                message.role === 'assistant'
+                  ? debugs[(index - 1) / 2]
+                  : undefined
+              }
+              isLLM={message.role === 'assistant'}
+            />
+          ))}
       </Stack>
       <Box position="sticky" bottom={4} zIndex={100} bg="bg" mt={[4, 16]}>
         <Formik
@@ -71,12 +75,20 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
                 },
                 session,
               );
-              newMessages.push({
-                role: 'assistant',
-                content: responseMessage,
-                pages: pages,
-              });
-              setMessages(newMessages);
+              setMessages([
+                ...messages,
+                {
+                  role: 'system',
+                  content: returnDebug?.context ?? '',
+                  pages: [],
+                },
+                { role: 'user', content: prompt, pages: [] },
+                {
+                  role: 'assistant',
+                  content: responseMessage,
+                  pages: pages,
+                },
+              ]);
               setSession(returnSession);
               setDebugs([...debugs, returnDebug?.context ?? '']);
               setSending(false);
