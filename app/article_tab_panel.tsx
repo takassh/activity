@@ -25,8 +25,7 @@ export function ArticleTabPanel({
   const [pages, setPages] = useState<Page[]>(initialPages);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const loadMore = async () => {
-    const page = Math.floor(pages.length / LIMIT);
-    const newPages = await getPages(page, LIMIT, category);
+    const newPages = await getPages(pages.length, LIMIT, category);
     setPages([...pages, ...newPages]);
     setHasMore(newPages.length === LIMIT);
   };

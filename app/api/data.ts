@@ -31,13 +31,13 @@ export async function getPosts(): Promise<Contents[]> {
 }
 
 export async function getPages(
-  page: number,
+  offset: number,
   limit: number,
   category: string,
 ): Promise<Page[]> {
   const response = await fetch(
     process.env.API_BASE_URI +
-      `/pages?page=${page}&limit=${limit}&category=${category}`,
+      `/pages?offset=${offset}&limit=${limit}&category=${category}`,
     { headers: { Authorization: process.env.API_KEY as string } },
   );
   const json = (await response.json()) as GetPagesResponse;
@@ -66,9 +66,12 @@ export async function getBlock(pageId: string): Promise<Block[]> {
   return page;
 }
 
-export async function getEvents(page: number, limit: number): Promise<Event[]> {
+export async function getEvents(
+  offset: number,
+  limit: number,
+): Promise<Event[]> {
   const response = await fetch(
-    process.env.API_BASE_URI + `/events?page=${page}&limit=${limit}`,
+    process.env.API_BASE_URI + `/events?offset=${offset}&limit=${limit}`,
     { headers: { Authorization: process.env.API_KEY as string } },
   );
   const json = (await response.json()) as GetEventsResponse;

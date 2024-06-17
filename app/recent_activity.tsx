@@ -41,8 +41,7 @@ export function RecentActivity({
   const [events, setEvents] = useState<Event[]>(initialEvents);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const loadMore = async () => {
-    const page = Math.floor(events.length / LIMIT);
-    const newEvents = await getEvents(page, LIMIT);
+    const newEvents = await getEvents(events.length, LIMIT);
     setEvents([...events, ...newEvents]);
     setHasMore(newEvents.length === LIMIT);
   };
