@@ -6,11 +6,13 @@ import {
   HStack,
   Icon,
   Image,
+  Link,
   Stack,
   Text,
 } from '@chakra-ui/react';
 import { faBug, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Debug } from '../api/response';
 import { isFileTypeExternal, isFileTypeHosted } from '../types/file';
 import {
   IsPagePropertyTypeRichText,
@@ -18,12 +20,12 @@ import {
   Page,
 } from '../types/notion_page';
 import { OGP } from '../ui/ogp';
-import { ToolTipIconModal } from '../ui/tool_tip_icon_modal';
+import { ToolTipIcon } from '../ui/tool_tip_icon';
 
 export interface BubbleProps extends FlexProps {
   message: string;
   pages: Page[];
-  debug?: string;
+  debug?: Debug;
   isLLM?: boolean;
 }
 
@@ -49,15 +51,13 @@ export function Bubble({
       <Stack ml={4} width="100%">
         <HStack>
           <Text as="b">{isLLM ? 'Takashi AI' : 'You'}</Text>
-          {isLLM && debug && debug.trim() != '' && (
-            <ToolTipIconModal
-              title="Given context"
-              ml={2}
-              icon={faBug}
-              fontSize={'md'}
+          {isLLM && debug && debug.traceId != '' && (
+            <Link
+              isExternal
+              href={`${process.env.NEXT_PUBLIC_LANGFUSE_TRACE_BASE_URL}/${debug.traceId}`}
             >
-              <Text whiteSpace="pre-line">{debug}</Text>
-            </ToolTipIconModal>
+              <ToolTipIcon icon={faBug} tooltip="See trace log" fontSize="sm" />
+            </Link>
           )}
         </HStack>
         <Text whiteSpace="pre-line">{message}</Text>

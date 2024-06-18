@@ -101,6 +101,7 @@ export function RecentActivity({
               key={event.id}
               href={`https://github.com/${event.repo.name}`}
               my={[1, 2]}
+              isExternal
             >
               <HStack>
                 <Image

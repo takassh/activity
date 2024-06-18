@@ -22,13 +22,14 @@ type Message = {
   role: 'system' | 'user' | 'assistant';
   content: string;
   pages: Page[];
+  traceId?: string;
 };
 
 export default function ChatBox({ token, ...props }: ChatBoxProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [sending, setSending] = useState(false);
   const [session, setSession] = useState<string>();
-  const [debugs, setDebugs] = useState<string[]>([]);
+  const [debugs, setDebugs] = useState<(Debug | undefined)[]>([]);
 
   return (
     <Box {...props}>
@@ -80,6 +81,7 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
                 {
                   role: 'system',
                   content: returnDebug?.context ?? '',
+                  traceId: returnDebug?.traceId ?? '',
                   pages: [],
                 },
                 { role: 'user', content: prompt, pages: [] },
@@ -90,7 +92,7 @@ export default function ChatBox({ token, ...props }: ChatBoxProps) {
                 },
               ]);
               setSession(returnSession);
-              setDebugs([...debugs, returnDebug?.context ?? '']);
+              setDebugs([...debugs, returnDebug]);
               setSending(false);
               values.prompt = '';
             });

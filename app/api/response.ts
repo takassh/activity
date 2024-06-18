@@ -79,6 +79,7 @@ export type SearchSSEDebug = {
 
 export type Debug = {
   context: string;
+  traceId: string;
 };
 
 export function isSearchSSERMessage(
